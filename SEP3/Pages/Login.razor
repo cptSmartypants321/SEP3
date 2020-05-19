@@ -1,0 +1,58 @@
+﻿
+@page "/login"
+@using SEP3.Data
+
+
+<h2>Login</h2>
+<br />
+
+
+<EditForm Model="@user" OnValidSubmit="@UserLogin">
+    <DataAnnotationsValidator />
+
+    <div class="col-12 row">
+        <label class="col-2 font-weight-bold">Username : </label>
+        <InputText class="form-control col-3" @bind-Value="user.Name" placeholder="Username" />
+        &nbsp;<ValidationMessage For="@(() => user.Name)" />
+    </div>
+    <br />
+    <div class="col-12 row">
+        <label class="col-2 font-weight-bold">Password :  </label>
+        <InputText class="form-control col-3" @bind-Value="user.Password" placeholder="password" />
+        &nbsp;<ValidationMessage For="@(() => user.Password)" />
+    </div>
+    <br />
+    <div class="col-12 row">
+        <span class="col-2"></span>
+        <input type="submit" class="form-control col-1 btn btn-primary" value="Login" />
+        <span>&nbsp;</span>
+        <input type="submit" class="form-control col-2 btn btn-primary" value="Create account" />
+    </div>
+</EditForm>
+
+
+@code {
+
+    public User user;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+        user = new User();
+
+    }
+    public void UserLogin()
+    {
+
+    }
+
+    private void createAccountPage()
+    {
+
+    }
+
+
+
+
+}

@@ -1,0 +1,27 @@
+﻿@page "/createaccount"
+
+<h3>Create a new Account</h3>
+<br />
+
+<h6>Please fill in the following information</h6>
+
+<br />
+<form>
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username"><br><br>
+    <label for="email">E-Mail:</label><br>
+    <input type="text" id="email" name="email"><br><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br><br>
+    <label for="password">Confirm Password</label><br>
+    <input type="password" id="password" name="password"><br>
+</form>
+<br />
+<button class="btn btn-primary" @onclick="createaccount">Create Account</button>
+@code {
+
+    private void createaccount()
+    {
+        // create account feature
+    }
+
