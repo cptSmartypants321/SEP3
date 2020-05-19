@@ -27,6 +27,9 @@ public class File {
         this();
     this.name = name;
     }
-
+   public String getFileId()
+   {
+       return FileId;
+   }
 
 }
