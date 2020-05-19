@@ -9,7 +9,7 @@
     <hr />
 
 
-    <EditForm Model="@book" OnValidSubmit="@SaveBook">
+    <EditForm Model="@book" OnValidSubmit="@SaveBook" >
         <DataAnnotationsValidator />
 
         <div class="col-12 row">
@@ -70,15 +70,16 @@
 
         book = new Book();
         Book[] temp = await bookServce.GetAllBookAsync();
-     //   HttpResponseMessage response = await httpClient.GetAsync("https://localhost:8080/");
-       // string responseBody = await response.Content.ReadAsStringAsync();
-        //var print = book.getJson(responseBody);
-        //Console.WriteLine(print.ToString());
+       
         bookList = new List<Book>();
         foreach (var bookarr in temp)
         {
             bookList.Add(bookarr);
         }
+         HttpResponseMessage response = await httpClient.GetAsync("http://localhost:8080/OnlineLibrary/");
+        string responseBody = await response.Content.ReadAsStringAsync();
+        var print = book.getJson(responseBody);
+        Console.WriteLine(print.ToString());
     }
 
     public void SaveBook()

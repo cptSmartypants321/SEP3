@@ -97,3 +97,5 @@ C:\Users\Anton Anastasov\Desktop\VIA ICT\SEP3\SEP3\SEP3\obj\Debug\netcoreapp3.1\
 C:\Users\Anton Anastasov\Desktop\VIA ICT\SEP3\SEP3\SEP3\obj\Debug\netcoreapp3.1\Razor\Shared\MainLayout.razor.g.cs
 C:\Users\Anton Anastasov\Desktop\VIA ICT\SEP3\SEP3\SEP3\obj\Debug\netcoreapp3.1\Razor\Shared\NavMenu.razor.g.cs
 C:\Users\Anton Anastasov\Desktop\VIA ICT\SEP3\SEP3\SEP3\obj\Debug\netcoreapp3.1\Razor\_Imports.razor.g.cs
+C:\Users\Anton Anastasov\Desktop\VIA ICT\SEP3\SEP3\SEP3\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\CreateAccount.razor.g.cs
+C:\Users\Anton Anastasov\Desktop\VIA ICT\SEP3\SEP3\SEP3\obj\Debug\netcoreapp3.1\Razor\Pages\CreateAccount.razor.g.cs
