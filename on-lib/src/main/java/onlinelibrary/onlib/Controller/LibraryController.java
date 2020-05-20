@@ -25,7 +25,9 @@ public class LibraryController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public HashMap<String, File> getAllFiles(){
+        System.out.println(" Get All Files");
         return libraryService.getAllFile();
+
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)

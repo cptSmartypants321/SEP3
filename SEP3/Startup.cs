@@ -27,7 +27,9 @@ namespace SEP3
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<BookService>();
+            services.AddSingleton<IUserService,UserService>();
             services.AddSingleton<HttpClient>();
+
             
         }
 

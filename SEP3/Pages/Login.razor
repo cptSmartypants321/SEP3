@@ -1,5 +1,7 @@
 ﻿@page "/login"
 @using SEP3.Data
+@using  SEP3.Services
+@inject IUserService userService
 
 
 <h2>Login</h2>
@@ -7,18 +9,18 @@
 
 
 <EditForm Model="@user" OnValidSubmit="@UserLogin">
-    <DataAnnotationsValidator />
+    
 
     <div class="col-12 row">
         <label class="col-2 font-weight-bold">Username : </label>
         <InputText class="form-control col-3" @bind-Value="user.Name" placeholder="Username" />
-        &nbsp;<ValidationMessage For="@(() => user.Name)" />
+       
     </div>
     <br />
     <div class="col-12 row">
         <label class="col-2 font-weight-bold">Password :  </label>
         <InputText class="form-control col-3" @bind-Value="user.Password" placeholder="password" />
-        &nbsp;<ValidationMessage For="@(() => user.Password)" />
+       
     </div>
     <br />
     <div class="col-12 row">
@@ -33,22 +35,24 @@
 @code {
 
     public User user;
+    public bool isCorrect;
 
-
-   /* protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        
         user = new User();
 
-    } */
-    public void UserLogin()
+    }
+    public async Task<bool>UserLogin()
     {
 
+        Console.WriteLine($"***************** USER LOGGED IN ****************** ");
+        return await Task.FromResult(true);
     }
 
-    private void createAccountPage()
+    private async Task<bool> createAccountPage()
     {
-
+        Console.WriteLine("***************** USER ACCOUNT CREATE******************");
+        return await Task.FromResult(true);
     }
 
 
