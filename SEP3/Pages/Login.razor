@@ -1,7 +1,8 @@
-﻿@page "/login"
+﻿@page "/"
 @using SEP3.Data
 @using  SEP3.Services
 @inject IUserService userService
+@inject NavigationManager navManager
 
 
 <h2>Login</h2>
@@ -9,25 +10,27 @@
 
 
 <EditForm Model="@user" OnValidSubmit="@UserLogin">
-    
+
 
     <div class="col-12 row">
         <label class="col-2 font-weight-bold">Username : </label>
         <InputText class="form-control col-3" @bind-Value="user.Name" placeholder="Username" />
-       
+
     </div>
     <br />
     <div class="col-12 row">
         <label class="col-2 font-weight-bold">Password :  </label>
-        <InputText class="form-control col-3" @bind-Value="user.Password" placeholder="password" />
-       
+        <input type="password" class="form-control col-3" @bind="user.Password" placeholder="password" />
+
     </div>
     <br />
     <div class="col-12 row">
         <span class="col-2"></span>
         <input type="submit" class="form-control col-1 btn btn-primary" value="Login" />
         <span>&nbsp;</span>
-        <input type="submit" class="form-control col-2 btn btn-primary" value="Create account" />
+        <a href="/createaccount">Create Account</a>
+        <!--<button class="btn btn-primary" @onclick="createAccountPage">Create Account</button>-->
+        <!-- <input type="submit" class="form-control col-2 btn btn-primary" value="Create account" /> -->
     </div>
 </EditForm>
 
@@ -42,16 +45,20 @@
         user = new User();
 
     }
-    public async Task<bool>UserLogin()
+    public async void UserLogin()
     {
+        bool temp = await userService.LoginAsync(user);
 
-        Console.WriteLine($"***************** USER LOGGED IN ****************** ");
-        return await Task.FromResult(true);
+        if (temp = true)
+        {
+            navManager.NavigateTo("/library");
+        }
+
     }
 
     private async Task<bool> createAccountPage()
     {
-        Console.WriteLine("***************** USER ACCOUNT CREATE******************");
+        Console.WriteLine("*************** USER ACCOUNT CREATE******************");
         return await Task.FromResult(true);
     }
 

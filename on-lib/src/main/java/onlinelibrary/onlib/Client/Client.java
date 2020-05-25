@@ -2,9 +2,10 @@ package onlinelibrary.onlib.Client;
 
 
 import onlinelibrary.onlib.Shared.Account;
+import onlinelibrary.onlib.Shared.File;
 import onlinelibrary.onlib.Shared.PropertyChangeSubject;
 
-import java.io.File;
+import java.util.HashMap;
 
 public interface Client extends PropertyChangeSubject {
 
@@ -16,6 +17,9 @@ public interface Client extends PropertyChangeSubject {
     public void deleteUser(String username);
     public String getAccountInfo();
     public boolean isAdmin();
+    public void getAllFiles();
+
+
 
 
 

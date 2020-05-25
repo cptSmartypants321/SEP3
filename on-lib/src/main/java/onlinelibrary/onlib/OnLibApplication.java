@@ -1,9 +1,9 @@
 package onlinelibrary.onlib;
 
-
 import onlinelibrary.onlib.Client.ClientMain;
-import onlinelibrary.onlib.Model.File;
+import onlinelibrary.onlib.Shared.File;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.HashMap;
@@ -16,11 +16,11 @@ public class OnLibApplication {
 
 
 
-        FileHashmap = new HashMap<>();
+       FileHashmap = new HashMap<>();
         File f1 = new File("FILEName");
-        FileHashmap.put(f1.getFileId(),f1);
+        FileHashmap.put(f1.getFileName(),f1);
 
-        ClientMain.Clientmain();
+
 
 
         SpringApplication.run(OnLibApplication.class, args);

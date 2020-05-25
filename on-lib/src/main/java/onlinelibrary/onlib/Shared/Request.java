@@ -15,7 +15,9 @@ public class Request implements Serializable {
         ACCOUNTS,
         DELETE,
         EMAIL,
-        ADMIN
+        ADMIN,
+        FILES,
+
     }
 
     public TYPE type;
