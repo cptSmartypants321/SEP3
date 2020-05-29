@@ -1,4 +1,13 @@
+<<<<<<< HEAD:on-lib/src/main/java/onlinelibrary/onlib/Tier3/Server.java
 package onlinelibrary.onlib.Tier3;
+=======
+package onlinelibrary.onlib.Tier3.Server;
+
+import onlinelibrary.onlib.Tier3.Database.Database;
+import onlinelibrary.onlib.Tier3.Database.DatabaseInterface;
+import onlinelibrary.onlib.Tier3.Shared.Model;
+import onlinelibrary.onlib.Tier3.Shared.ModelImplementation;
+>>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4:on-lib/src/main/java/onlinelibrary/onlib/Tier3/Server/Server.java
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -34,7 +43,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        DatabaseInterface m = new AccountDatabase();
+        DatabaseInterface m = new Database();
         Model model = new ModelImplementation(m);
         Server server = new Server(model);
         try {

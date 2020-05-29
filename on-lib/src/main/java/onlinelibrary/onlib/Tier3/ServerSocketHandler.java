@@ -1,9 +1,18 @@
+<<<<<<< HEAD:on-lib/src/main/java/onlinelibrary/onlib/Tier3/ServerSocketHandler.java
 package onlinelibrary.onlib.Tier3;
 
 import onlinelibrary.onlib.Shared.Account;
 import onlinelibrary.onlib.Shared.Request;
 
 import java.beans.PropertyChangeEvent;
+=======
+package onlinelibrary.onlib.Tier3.Server;
+
+import onlinelibrary.onlib.Shared.Account;
+import onlinelibrary.onlib.Shared.Request;
+import onlinelibrary.onlib.Tier3.Shared.Model;
+
+>>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4:on-lib/src/main/java/onlinelibrary/onlib/Tier3/Server/ServerSocketHandler.java
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -37,11 +46,12 @@ public class ServerSocketHandler implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        model.addPropertyChangeListener("newUserAdded",this::userAdded);;
-        model.addPropertyChangeListener("userDeleted",this::userDeleted);
+        //model.addPropertyChangeListener("newUserAdded",this::userAdded);;
+        //model.addPropertyChangeListener("userDeleted",this::userDeleted);
 
 //        model.addListener("TaskRemoved", this::removeTask);
     }
+    /*
 
     private void userDeleted(PropertyChangeEvent propertyChangeEvent) {
         String username = (String) propertyChangeEvent.getNewValue();
@@ -54,6 +64,8 @@ public class ServerSocketHandler implements Runnable{
         }
     }
 
+     */
+/*
     private void userAdded(PropertyChangeEvent propertyChangeEvent) {
         try {
             Account newlyAdded = (Account) propertyChangeEvent.getNewValue();
@@ -67,6 +79,11 @@ public class ServerSocketHandler implements Runnable{
         }
     }
 
+<<<<<<< HEAD:on-lib/src/main/java/onlinelibrary/onlib/Tier3/ServerSocketHandler.java
+=======
+ */
+
+>>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4:on-lib/src/main/java/onlinelibrary/onlib/Tier3/Server/ServerSocketHandler.java
 
     public void run() {
         try {
@@ -81,6 +98,7 @@ public class ServerSocketHandler implements Runnable{
                 Request req= (Request)inFromClient.readObject();
                 if(req.type == Request.TYPE.FILES){
                     //outToClient.writeObject(new Request(Request.TYPE.FILES, file));
+<<<<<<< HEAD:on-lib/src/main/java/onlinelibrary/onlib/Tier3/ServerSocketHandler.java
                     System.out.println("Hello");
                     System.out.println(req.argument.toString());
                 }
@@ -88,6 +106,15 @@ public class ServerSocketHandler implements Runnable{
 
                 if(req.type == Request.TYPE.ACCOUNTS){
                     System.out.println("Hello");
+=======
+                    System.out.println(req.argument.toString());
+                }
+
+
+                if(req.type == Request.TYPE.ACCOUNTS){
+                    System.out.println(req.argument);
+
+>>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4:on-lib/src/main/java/onlinelibrary/onlib/Tier3/Server/ServerSocketHandler.java
                 }
 
                 if (req.equals(null)) {
@@ -96,8 +123,6 @@ public class ServerSocketHandler implements Runnable{
                 if (req.type == Request.TYPE.LOGIN) {
 
                     Account temp = (Account) req.get();
-
-
                     if (model.compareLogin(temp)) {
                         // send confirmation message
                         if (model.isAdmin(temp)) {
@@ -108,10 +133,14 @@ public class ServerSocketHandler implements Runnable{
 
                         System.out.println("Login successful");
                         outToClient.writeObject(new Request(Request.TYPE.LOGIN, true));
+                        System.out.println("Confirmation sent");
+                        /*
                         outToClient.writeObject(new Request(Request.TYPE.EMAIL, model.getTempEmail()));
                         //outToClient.writeObject(new Request(Request.TYPE.ADD, ));
                         accounts.add(temp);
                         outToClient.writeObject(new Request(Request.TYPE.ACCOUNTS, model.userArray()));
+
+                        */
 
                     } else {
                         // send error message to client
@@ -139,6 +168,7 @@ public class ServerSocketHandler implements Runnable{
                     }
                 } else if (req.type == Request.TYPE.CREATEACC) {
 
+                    System.out.println("CREATING ACCOUNT IN SSH");
                     model.createUser((Account) req.get());
 
 

@@ -3,7 +3,6 @@
 @using SEP3.Data
 @inject HttpClient httpClient
 @inject IUserService userService
-@using System.ComponentModel.DataAnnotations
 
 <h3>Create a new Account</h3>
 <br />
@@ -17,26 +16,26 @@
     
     <div class="col-12 row">
         <label class="col-2 font-weight-bold">Username : </label>
-        <InputText class="form-control col-3" @bind-Value="user.username" placeholder="username" />
-        &nbsp;<ValidationMessage For="@(() => user.username)" />
+        <InputText class="form-control col-3" @bind-Value="user.Name" placeholder="username" />
+        &nbsp;<ValidationMessage For="@(() => user.Name)" />
     </div>
     <br />
     <div class="col-12 row">
         <label class="col-2 font-weight-bold">E-mail : </label>
-        <InputText class="form-control col-3" @bind-Value="user.email" placeholder="E-mail" />
-        &nbsp;<ValidationMessage For="@(() => user.email)" />
+        <InputText class="form-control col-3" @bind-Value="user.Email" placeholder="E-mail" />
+        &nbsp;<ValidationMessage For="@(() => user.Email)" />
     </div>
     <br />
     <div class="col-12 row">
         <label class="col-2 font-weight-bold">Password : </label>
-        <input type="password" class="form-control col-3" @bind="user.password" placeholder="password" />
-        &nbsp;<ValidationMessage For="@(() => user.password)" />
+        <input type="password" class="form-control col-3" @bind="user.Password" placeholder="password" />
+        &nbsp;<ValidationMessage For="@(() => user.Password)" />
     </div>
     <br />
     <div class="col-12 row">
         <label class="col-2 font-weight-bold">Confirm password : </label>
-        <input type="password" class="form-control col-3" @bind="confPass" placeholder="Confirm password" />
-        &nbsp;<ValidationMessage For="@(() => confPass)" />
+        <input type="password" class="form-control col-3" @bind="user.ConfPass" placeholder="Confirm password" />
+        &nbsp;<ValidationMessage For="@(() => user.ConfPass)" />
     </div>
     <br />
     <br />
@@ -48,8 +47,6 @@
 
 @code {
     public User user;
-    [Required]
-    string confPass;
 
     protected override void OnInitialized()
     {
@@ -58,19 +55,8 @@
     }
     public async void CreateAcc()
     {
-        if(user.password.Equals(confPass))
-        {
-            bool temp = await userService.CreateAccAsync(user);
-            Console.WriteLine($"*************** Create User ***********" + user);
-        }
-        else
-        {
-
-          // Display notification..
-        }
-
-
-
+        bool temp=await userService.CreateAccAsync(user);
+        Console.WriteLine($"*************** Create User ***********" + user);
 
     }
 
