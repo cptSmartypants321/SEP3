@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package onlinelibrary.onlib.Tier3.Server;
 
 import onlinelibrary.onlib.Shared.Account;
@@ -10,28 +9,6 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-=======
-<<<<<<< HEAD:on-lib/src/main/java/onlinelibrary/onlib/Tier3/ServerSocketHandler.java
-package onlinelibrary.onlib.Tier3;
-
-import onlinelibrary.onlib.Shared.Account;
-import onlinelibrary.onlib.Shared.Request;
-
-import java.beans.PropertyChangeEvent;
-=======
-package onlinelibrary.onlib.Tier3.Server;
-
-import onlinelibrary.onlib.Shared.Account;
-import onlinelibrary.onlib.Shared.Request;
-import onlinelibrary.onlib.Tier3.Shared.Model;
-
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4:on-lib/src/main/java/onlinelibrary/onlib/Tier3/Server/ServerSocketHandler.java
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.ArrayList;
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
 
 
 public class ServerSocketHandler implements Runnable{
@@ -43,11 +20,8 @@ public class ServerSocketHandler implements Runnable{
     private Model model;
     private ArrayList<Account> accounts;
 
-<<<<<<< HEAD
     public static HashMap<String, File> FileHashmap;
 
-=======
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
     /**
      * A constuctor method  that initializes the Object input and output streams
      * @param socket a Socket object
@@ -98,21 +72,12 @@ public class ServerSocketHandler implements Runnable{
         }
     }
 
-<<<<<<< HEAD
  */
 
-=======
-<<<<<<< HEAD:on-lib/src/main/java/onlinelibrary/onlib/Tier3/ServerSocketHandler.java
-=======
- */
-
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4:on-lib/src/main/java/onlinelibrary/onlib/Tier3/Server/ServerSocketHandler.java
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
 
     public void run() {
         try {
             while (true) {
-<<<<<<< HEAD
                 //File temp = (File)inFromClient.readObject();
                 //Request req= (Request)convertReq(temp);
                 Request req= (Request)inFromClient.readObject();
@@ -133,41 +98,11 @@ public class ServerSocketHandler implements Runnable{
                     System.out.println("Getting Accounts from database: " + model.userArray());
                     outToClient.writeObject(new Request(Request.TYPE.ACCOUNTS, model.userArray()));
 
-=======
-                //System.out.println("Working");
-                System.out.println(inFromClient.toString());
-                System.out.println("here");
-
-                //File temp = (File)inFromClient.readObject();
-
-                //Request req= (Request)convertReq(temp);
-                Request req= (Request)inFromClient.readObject();
-                if(req.type == Request.TYPE.FILES){
-                    //outToClient.writeObject(new Request(Request.TYPE.FILES, file));
-<<<<<<< HEAD:on-lib/src/main/java/onlinelibrary/onlib/Tier3/ServerSocketHandler.java
-                    System.out.println("Hello");
-                    System.out.println(req.argument.toString());
-                }
-
-
-                if(req.type == Request.TYPE.ACCOUNTS){
-                    System.out.println("Hello");
-=======
-                    System.out.println(req.argument.toString());
-                }
-
-
-                if(req.type == Request.TYPE.ACCOUNTS){
-                    System.out.println(req.argument);
-
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4:on-lib/src/main/java/onlinelibrary/onlib/Tier3/Server/ServerSocketHandler.java
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
                 }
 
                 if (req.equals(null)) {
                     System.out.println("Client disconnected :) ");
                 }
-<<<<<<< HEAD
                 if(req.type == Request.TYPE.ADD){
                     File file = (File)req.argument;
                     System.out.println("Adding file to server " + file);
@@ -226,41 +161,6 @@ public class ServerSocketHandler implements Runnable{
                 }
                 /*
                 else if (req.type == Request.TYPE.EDITPASS) {
-=======
-                if (req.type == Request.TYPE.LOGIN) {
-
-                    Account temp = (Account) req.get();
-                    if (model.compareLogin(temp)) {
-                        // send confirmation message
-                        if (model.isAdmin(temp)) {
-                            temp.setAdmin(true);
-                            System.out.println("Server socket: IM AN ADMIN :)");
-                            outToClient.writeObject(new Request(Request.TYPE.ADMIN, temp));
-                        }
-
-                        System.out.println("Login successful");
-                        outToClient.writeObject(new Request(Request.TYPE.LOGIN, true));
-                        System.out.println("Confirmation sent");
-                        /*
-                        outToClient.writeObject(new Request(Request.TYPE.EMAIL, model.getTempEmail()));
-                        //outToClient.writeObject(new Request(Request.TYPE.ADD, ));
-                        accounts.add(temp);
-                        outToClient.writeObject(new Request(Request.TYPE.ACCOUNTS, model.userArray()));
-
-                        */
-
-                    } else {
-                        // send error message to client
-                        System.out.println("Login unsuccessful");
-                        outToClient.writeObject(new Request(Request.TYPE.LOGIN, false));
-                    }
-                } else if (req.type == Request.TYPE.REMOVE) {
-                    // model.taskRemoved((Object) req.task);
-                } else if (req.type == Request.TYPE.DELETE) {
-                    String username = (String) req.argument;
-                    model.deleteUser(username);
-                } else if (req.type == Request.TYPE.EDITPASS) {
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
                     // recieve an account from the socketClient
 
                     for (int i = 0; i < accounts.size(); i++) {
@@ -274,15 +174,11 @@ public class ServerSocketHandler implements Runnable{
                         model.editEmail((Account) req.get());
 
                     }
-<<<<<<< HEAD
                 }
 
                  */
 
                 else if (req.type == Request.TYPE.CREATEACC) {
-=======
-                } else if (req.type == Request.TYPE.CREATEACC) {
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
 
                     System.out.println("CREATING ACCOUNT IN SSH");
                     model.createUser((Account) req.get());
@@ -302,7 +198,6 @@ public class ServerSocketHandler implements Runnable{
             e.printStackTrace();
         }
     }
-<<<<<<< HEAD
 
     public void recieveFle(File files)  {
         // A name for the file to be received
@@ -346,6 +241,4 @@ public class ServerSocketHandler implements Runnable{
     }
 
 
-=======
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
 }

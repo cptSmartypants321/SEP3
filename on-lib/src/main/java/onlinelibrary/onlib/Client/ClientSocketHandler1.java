@@ -5,6 +5,7 @@ import onlinelibrary.onlib.Model.LibraryService;
 import onlinelibrary.onlib.Shared.Account;
 import onlinelibrary.onlib.Shared.Request;
 
+import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -31,29 +32,17 @@ public class ClientSocketHandler1 implements Runnable{
     @Override
     public void run() {
         int i =0;
+
+        /*
         try{
             while (true){
                 Request req = (Request) in.readObject();
-                if(req.type == Request.TYPE.LOGIN){
-
+                if(req.type == Request.TYPE.LOGINCONF){
+                    System.out.println("CALLING CSH");
                    libraryService.loginConfirmation((boolean)req.argument);
 
+
                 }
-                /*if(i == 0){
-                    sendToServer(Request.TYPE.ACCOUNTS, new Account("mathias","hello", "mail"));
-                    i++;
-                }
-
-                 */
-
-
-
-                //if(req.type == Request.TYPE.EDITEMAIL)
-                /*if(req.type == Request.TYPE.FILES){
-                    System.out.println(req.argument.toString());
-                }
-
-                 */
 
             }
 
@@ -65,7 +54,11 @@ public class ClientSocketHandler1 implements Runnable{
             e.printStackTrace();
         }
 
+         */
+
+
     }
+
     public void sendToServer(Request.TYPE type, Object obj) {
         try {
             Request req = new Request(type,obj);
@@ -78,6 +71,36 @@ public class ClientSocketHandler1 implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+
+    public Account sendToServer1(Request.TYPE type, Object obj){
+        Request req = new Request(type,obj);
+        try {
+            out.writeObject(req);
+
+            Request response = (Request)in.readObject();
+            //System.out.println("SENDTOSERVER1: "+ response.argument);
+            return (Account) response.argument;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return (Account) obj;
+    }
+
+    public Object sendToServer2(Request.TYPE type, Object obj){
+        Request req = new Request(type,obj);
+        try {
+            out.writeObject(req);
+
+            Request response = (Request)in.readObject();
+            //System.out.println("SENDTOSERVER2: "+ response.argument);
+            return response.argument;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return obj;
     }
 
 }

@@ -5,10 +5,7 @@ import onlinelibrary.onlib.Shared.Comment;
 import onlinelibrary.onlib.Shared.File;
 import onlinelibrary.onlib.Shared.Rating;
 
-<<<<<<< HEAD
 import java.awt.*;
-=======
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -46,11 +43,7 @@ public class Database implements DatabaseInterface {
      * @return a boolean value
      */
 
-<<<<<<< HEAD
     public Account compareLogin(Account temp) {
-=======
-    public boolean compareLogin(Account temp) {
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
         try {
             openConn();
             PreparedStatement preparedStatement = c.prepareStatement("SELECT * FROM \"ViaOnlineLibrary\".users;");
@@ -60,22 +53,15 @@ public class Database implements DatabaseInterface {
                 String username = rs.getString("username");
                 String pass = rs.getString("password");
                 String mail = rs.getString("email");
-<<<<<<< HEAD
                 boolean admin = rs.getBoolean("isadmin");
-=======
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
                 if(temp.getUsername()!= null || temp.getPassword()!=null)
                 {
                     if (temp.getUsername().equals(username) && temp.getPassword().equals(pass)) {
                         System.out.println("account validated");
                         tempEmail = mail;
-<<<<<<< HEAD
                         Account acc = new Account(username,pass,mail);
                         acc.setAdmin(admin);
                         return acc;
-=======
-                        return true;
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
                     }
                 }
 
@@ -93,12 +79,8 @@ public class Database implements DatabaseInterface {
                 e.printStackTrace();
             }
         }
-<<<<<<< HEAD
         Account ac1 = new Account("null","null","null");
         return ac1;
-=======
-        return false;
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
     }
 
 

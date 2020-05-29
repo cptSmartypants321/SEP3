@@ -8,11 +8,7 @@ import onlinelibrary.onlib.Shared.Rating;
 import java.util.ArrayList;
 
 public interface DatabaseInterface {
-<<<<<<< HEAD
     Account compareLogin(Account temp);
-=======
-    boolean compareLogin(Account temp);
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
     void editPassword(Account acc);
     void editEmail(Account acc);
     void createUser(Account acc);

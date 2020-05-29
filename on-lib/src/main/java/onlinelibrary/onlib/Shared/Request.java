@@ -8,6 +8,7 @@ public class Request implements Serializable {
         ADD,
         REMOVE,
         LOGIN,
+        LOGINCONF,
         EDIT,
         EDITPASS,
         EDITEMAIL,
@@ -17,13 +18,14 @@ public class Request implements Serializable {
         EMAIL,
         ADMIN,
         FILES,
+        OWNFILES,
 
     }
 
     public TYPE type;
     public Object argument;
-
     private Account account;
+    private Comment comment;
 
     /**
      * A constructor for the Request class
@@ -31,10 +33,12 @@ public class Request implements Serializable {
      * @param t An Object that is going to be sent
      * @param account an Account object
      */
-    public Request(TYPE type, Object t, Account account) {
+    public Request(TYPE type, Object file, Comment comment, Account account) {
         this.type = type;
-        this.argument = t;
+        this.argument = file;
+        this.comment = comment;
         this.account = account;
+
     }
 
     /**

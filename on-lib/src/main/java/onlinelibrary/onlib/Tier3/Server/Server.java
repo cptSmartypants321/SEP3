@@ -1,19 +1,9 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD:on-lib/src/main/java/onlinelibrary/onlib/Tier3/Server.java
-package onlinelibrary.onlib.Tier3;
-=======
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
 package onlinelibrary.onlib.Tier3.Server;
 
 import onlinelibrary.onlib.Tier3.Database.Database;
 import onlinelibrary.onlib.Tier3.Database.DatabaseInterface;
 import onlinelibrary.onlib.Tier3.Shared.Model;
 import onlinelibrary.onlib.Tier3.Shared.ModelImplementation;
-<<<<<<< HEAD
-=======
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4:on-lib/src/main/java/onlinelibrary/onlib/Tier3/Server/Server.java
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -28,10 +18,6 @@ public class Server {
      */
     public Server (Model data) {
         this.data=data;
-<<<<<<< HEAD
-=======
-
->>>>>>> 607546fece7dbdc8dbff0aef0c195dab5039a9b4
     }
 
     /**

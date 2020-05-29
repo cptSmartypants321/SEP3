@@ -10,8 +10,8 @@ namespace SEP3.Services
     {
        
            // public Task<User> LogInAsync(User user);
-            public bool Login(User user);
-         public  Task<bool> LoginAsync(User user);
+
+         public  Task<User> LoginAsync(User user);
         public Task<bool> CreateAccAsync(User user);
 
 
