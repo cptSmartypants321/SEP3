@@ -2,10 +2,7 @@ package onlinelibrary.onlib.Client;
 
 
 import onlinelibrary.onlib.Shared.Account;
-import onlinelibrary.onlib.Shared.File;
 import onlinelibrary.onlib.Shared.PropertyChangeSubject;
-
-import java.util.HashMap;
 
 public interface Client extends PropertyChangeSubject {
 

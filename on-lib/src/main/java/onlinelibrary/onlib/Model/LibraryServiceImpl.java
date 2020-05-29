@@ -1,16 +1,14 @@
 package onlinelibrary.onlib.Model;
 
-import onlinelibrary.onlib.Client.Client;
 import onlinelibrary.onlib.Client.ClientMain;
 import onlinelibrary.onlib.Controller.LibraryController;
 import onlinelibrary.onlib.Shared.Account;
-import onlinelibrary.onlib.Shared.File;
+import onlinelibrary.onlib.Shared.Files;
 import onlinelibrary.onlib.OnLibApplication;
 import onlinelibrary.onlib.Shared.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.beans.PropertyChangeListener;
@@ -38,14 +36,14 @@ public class LibraryServiceImpl implements LibraryService{
     }
 
     @Override
-    public HashMap<String, File> getAllFile() {
-        File file = new File("hello");
+    public HashMap<String, Files> getAllFile() {
+        Files files = new Files("hello");
         clientMain.SendToServer2(Request.TYPE.FILES,null);
         return OnLibApplication.FileHashmap;
     }
 
     @Override
-    public File addFile(File file) {
+    public Files addFile(Files files) {
         /*
         File resultSet = OnLibApplication.FileHashmap.get(file.getFileName());
         if(resultSet != null){
@@ -55,18 +53,18 @@ public class LibraryServiceImpl implements LibraryService{
         return OnLibApplication.FileHashmap.get(file.getFileName());
 
          */
-        return (File) clientMain.SendToServer2(Request.TYPE.ADD, file);
+        return (Files) clientMain.SendToServer2(Request.TYPE.ADD, files);
     }
 
     @Override
-    public HashMap<String, File> getFileFromDatabase() {
+    public HashMap<String, Files> getFileFromDatabase() {
 
-        return (HashMap<String, File>) clientMain.SendToServer2(Request.TYPE.FILES, null);
+        return (HashMap<String, Files>) clientMain.SendToServer2(Request.TYPE.FILES, null);
     }
 
     @Override
-    public HashMap<String, File> getOwnFileFromDatabase(Account account) {
-        return (HashMap<String, File>) clientMain.SendToServer2(Request.TYPE.OWNFILES, account);
+    public HashMap<String, Files> getOwnFileFromDatabase(Account account) {
+        return (HashMap<String, Files>) clientMain.SendToServer2(Request.TYPE.OWNFILES, account);
     }
 
     @Override
@@ -80,8 +78,8 @@ public class LibraryServiceImpl implements LibraryService{
     }
 
     @Override
-    public File deleteFile(File file) {
-        return (File)clientMain.SendToServer2(Request.TYPE.REMOVE, file);
+    public Files deleteFile(Files files) {
+        return (Files)clientMain.SendToServer2(Request.TYPE.REMOVE, files);
     }
 
     @Override

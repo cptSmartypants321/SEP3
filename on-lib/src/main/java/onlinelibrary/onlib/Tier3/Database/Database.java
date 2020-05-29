@@ -2,10 +2,9 @@ package onlinelibrary.onlib.Tier3.Database;
 
 import onlinelibrary.onlib.Shared.Account;
 import onlinelibrary.onlib.Shared.Comment;
-import onlinelibrary.onlib.Shared.File;
+import onlinelibrary.onlib.Shared.Files;
 import onlinelibrary.onlib.Shared.Rating;
 
-import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -20,7 +19,7 @@ public class Database implements DatabaseInterface {
     private static Connection c = null;
     private ArrayList<Account> accounts = new ArrayList<Account>();
     private String tempEmail;
-   private ArrayList<File> files=new ArrayList<>();
+   private ArrayList<Files> files=new ArrayList<>();
 
 
 
@@ -270,7 +269,7 @@ public class Database implements DatabaseInterface {
 
     }
 
-    public ArrayList<File> files() {
+    public ArrayList<Files> files() {
 
         try {
             openConn();
@@ -297,7 +296,7 @@ public class Database implements DatabaseInterface {
                 boolean marketing = rs.getBoolean("marketing");
 
 
-                files.add(new File(filename, username, uploadDate, format, filesize, path , rating, math, physics, chemistry, geography, literature, construction, marketing, null));
+                files.add(new Files(filename, username, uploadDate, format, filesize, path , rating, math, physics, chemistry, geography, literature, construction, marketing, null));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -309,12 +308,12 @@ public class Database implements DatabaseInterface {
 
 
     @Override
-    public void addFile(File file) {
+    public void addFile(Files files) {
         try {
             openConn();
             PreparedStatement preparedStatement = c.prepareStatement("SELECT * FROM \"ViaOnlineLibrary\".files;");
             ResultSet rs = preparedStatement.executeQuery();
-            System.out.println("DATABASE: " + file.getFileName() + file.getDateOfUpload());
+            System.out.println("DATABASE: " + files.getFileName() + files.getDateOfUpload());
 
 
             while (rs.next()) {
@@ -339,7 +338,7 @@ public class Database implements DatabaseInterface {
                 }
             }
             System.out.println("File Now in database!");
-            addFileTODataBase(preparedStatement,file.getFileName(), file.getUsername(), file.getDateOfUpload(), file.getFormat(),file.getFileSize(), file.getPath(),file.getRating(), file.isMath(),file.isPhysics(), file.isChemistry(), file.isGeography(), file.isLiterature(), file.isConstruction(), file.isMarketing());
+            addFileTODataBase(preparedStatement, files.getFileName(), files.getUsername(), files.getDateOfUpload(), files.getFormat(), files.getFileSize(), files.getPath(), files.getRating(), files.isMath(), files.isPhysics(), files.isChemistry(), files.isGeography(), files.isLiterature(), files.isConstruction(), files.isMarketing());
 
             rs.close();
             preparedStatement.close();
@@ -377,12 +376,12 @@ public class Database implements DatabaseInterface {
 
 
     @Override
-    public void addRatingToFile(Rating rating, File file, Account account) {
+    public void addRatingToFile(Rating rating, Files files, Account account) {
         try {
             openConn();
             PreparedStatement preparedStatement = c.prepareStatement("SELECT * FROM \"ViaOnlineLibrary\".rating;");
             ResultSet rs = preparedStatement.executeQuery();
-            System.out.println("DATABASE: " + file.getFileName() + " " + account.getUsername());
+            System.out.println("DATABASE: " + files.getFileName() + " " + account.getUsername());
 
 
             while (rs.next()) {
@@ -405,7 +404,7 @@ public class Database implements DatabaseInterface {
             double numberofratings = rs.getDouble("numberofrating");
 
             double totalratings = rs.getDouble("totalrating");
-            if(account.getUsername().equals(username) && file.getFileName().equals(filename))
+            if(account.getUsername().equals(username) && files.getFileName().equals(filename))
             {
 
                 String preparedSql = "INSERT INTO \"ViaOnlineLibrary\".rating (filename, username, rating, numberofrating, totalrating)" +
@@ -420,7 +419,7 @@ public class Database implements DatabaseInterface {
             totalratings += rating.getRating()/numberofratings;
 
             System.out.println("Rating Now in database!");
-            addRatingToFileDatabase(preparedStatement,file.getFileName(),account.getUsername(),rating.getRating(),numberofratings,totalratings);
+            addRatingToFileDatabase(preparedStatement, files.getFileName(),account.getUsername(),rating.getRating(),numberofratings,totalratings);
             rs.close();
             preparedStatement.close();
 
@@ -429,12 +428,12 @@ public class Database implements DatabaseInterface {
         }
     }
 
-    public void addComment(File file, Comment comment, Account account) {
+    public void addComment(Files files, Comment comment, Account account) {
         try {
             openConn();
             PreparedStatement preparedStatement = c.prepareStatement("SELECT * FROM \"ViaOnlineLibrary\".comment;");
             ResultSet rs = preparedStatement.executeQuery();
-            System.out.println("DATABASE: " + file.getFileName() +" "+ account.getUsername());
+            System.out.println("DATABASE: " + files.getFileName() +" "+ account.getUsername());
 
 
             while (rs.next()) {
@@ -459,7 +458,7 @@ public class Database implements DatabaseInterface {
                 }
             }
             System.out.println("Comment now in database!");
-            addCommentTODataBase(preparedStatement,file.getFileName(),account.getUsername(),comment.getComment(), comment.getNow());
+            addCommentTODataBase(preparedStatement, files.getFileName(),account.getUsername(),comment.getComment(), comment.getNow());
             rs.close();
             preparedStatement.close();
 
@@ -469,7 +468,7 @@ public class Database implements DatabaseInterface {
     }
 
     @Override
-    public ArrayList<Comment> comments(File files) {
+    public ArrayList<Comment> comments(Files files) {
 
         try {
             openConn();

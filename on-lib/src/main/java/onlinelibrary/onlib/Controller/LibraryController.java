@@ -1,23 +1,28 @@
 package onlinelibrary.onlib.Controller;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import lombok.AccessLevel;
 
 import lombok.experimental.FieldDefaults;
 import onlinelibrary.onlib.Shared.Account;
 import onlinelibrary.onlib.Shared.Comment;
-import onlinelibrary.onlib.Shared.File;
+import onlinelibrary.onlib.Shared.Files;
 import onlinelibrary.onlib.Model.LibraryService;
-import org.apache.el.stream.Stream;
-import org.apache.tomcat.util.json.JSONParser;
 import org.apache.tomcat.util.json.ParseException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 
 @RestController
@@ -43,7 +48,7 @@ public class LibraryController {
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public ResponseEntity<Object> getAllFiles(){
-        HashMap<String, File> files = libraryService.getAllFile();
+        HashMap<String, Files> files = libraryService.getAllFile();
         if(files.equals(null)){
             return new ResponseEntity<>("SHIT WENT DONW",HttpStatus.BAD_REQUEST);
         } else {
@@ -70,11 +75,11 @@ public class LibraryController {
         // Method for removing a file from system.
         // Not using RequestMethod.DELETE as it doesnt return anything..
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
-    public File deleteFile(@RequestParam(value = "Name") String file){
+    public Files deleteFile(@RequestParam(value = "Name") String file){
         System.out.println("Deleting file from Blazor: " + file);
         // TODO: 28-05-2020 Convertion into a file object
-        File file1 = new File(file);
-        return libraryService.deleteFile(file1);
+        Files files1 = new Files(file);
+        return libraryService.deleteFile(files1);
     }
 
     // TODO: 28-05-2020 Comment
@@ -99,14 +104,23 @@ public class LibraryController {
 
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public File addFile(@RequestBody String name){
-        System.out.println("File Received from Blazor: " + name);
+    public Files addFile(@RequestBody String name) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<Files> ref = new TypeReference<Files>(){};
+        Files files = mapper.readValue(name, ref);
+        files.setCategory();
+        System.out.println("File Received from Blazor: " + files.getFileName() + " Owner: " + files.getUsername());
+        System.out.println(files.getFileName() + " Username " + files.getUsername() + "Rating: " + files.getRating() + " Category: " +files.isChemistry());
+
+
+
+
         // TODO: 28-05-2020 Fix the stream !!!
         //byte[] byteArray=new byte[name.count()];
         //name.toArray(byteArray);
-        File file = new File("Hello");
+        //File file = new File("Hello");
 
-        return libraryService.addFile(file);
+        return libraryService.addFile(files);
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
@@ -154,7 +168,44 @@ public class LibraryController {
         return account;
     }
 
+private void rf(Files files){
+    String FILE_TO_RECEIVED = files.getFileName();
+    int bytesRead;
+    int current=0;
+    FileOutputStream fos=null;
+    BufferedOutputStream bos=null;
+    try{
+        System.out.println("Array size "+files.getMybytearray().length);
+        fos = new FileOutputStream("./myfolder/" +FILE_TO_RECEIVED);
+        bos = new BufferedOutputStream(fos);
+        bos.write(files.getMybytearray());
 
+        bos.flush();
+        System.out.println("File "+FILE_TO_RECEIVED
+                + " downloaded (" + current + " bytes read)");
+
+    }
+    catch (IOException e) {
+        e.printStackTrace();
+    }
+    finally {
+        if (fos != null) {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (bos != null) {
+            try {
+                bos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+}
 
 
 

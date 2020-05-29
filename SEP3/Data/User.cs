@@ -8,7 +8,7 @@ namespace SEP3.Data
 {
     public partial class User
     {
-        [Required(ErrorMessage = "Username is required.")]
+        [Required(ErrorMessage = "username is required.")]
         public String username { get; set; }
         //[Range(2,99999, ErrorMessage = "password should be more than 2 characters long. ")]
         [Required(ErrorMessage = "Password is required.")]

@@ -1,9 +1,7 @@
 package onlinelibrary.onlib;
 
-import onlinelibrary.onlib.Client.ClientMain;
-import onlinelibrary.onlib.Shared.File;
+import onlinelibrary.onlib.Shared.Files;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.HashMap;
@@ -11,13 +9,13 @@ import java.util.HashMap;
 @SpringBootApplication
 public class OnLibApplication {
 
-    public static HashMap<String, File> FileHashmap;
+    public static HashMap<String, Files> FileHashmap;
     public static void main(String[] args) {
 
 
 
        FileHashmap = new HashMap<>();
-        File f1 = new File("FILEName");
+        Files f1 = new Files("FILEName");
         FileHashmap.put(f1.getFileName(),f1);
 
 

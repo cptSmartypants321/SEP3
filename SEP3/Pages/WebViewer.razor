@@ -51,30 +51,30 @@
 div class="row">
 <div class="col-md-6">
     <h3>Rating with 5 stars</h3>
-    <RadzenRating Style="margin-bottom: 20px" Change="@((args) => Change(args, "Rating with 5 stars"))" />
+    <RadzenRating Style="margin-bottom: 20px" Change="@((args) => Change(args, "rating with 5 stars"))" />
     <br />
 </div>
 
 @foreach (var file in files)
 {
-    if (file.Format == "pdf")
+    if (file.format == "pdf")
     {
-        <SfPdfViewerServer DocumentPath=@file.Path Height="650px" Width="1060" ID="pdf"></SfPdfViewerServer>
+        <SfPdfViewerServer DocumentPath=@file.path Height="650px" Width="1060" ID="pdf"></SfPdfViewerServer>
     }
-    if (file.Format == "mp4" || file.Format == "ogg")
+    if (file.format == "mp4" || file.format == "ogg")
     {
         <div class="col-10" style="left: 15%">
-            <video controls poster=@file.Path width="854" height="480">
+            <video controls poster=@file.path width="854" height="480">
                 <source src="movie.mp4" type="video/mp4">
                 <source src="movie.ogg" type="video/ogg">
                 Your browser does not support the video tag.
             </video>
         </div>
     }
-    if (file.Format == "png" || file.Format == "jpg" || file.Format == "jpeg")
+    if (file.format == "png" || file.format == "jpg" || file.format == "jpeg")
     {
         <div class="col-10" style="left: 15%">
-            <img src=@file.Path alt="picture" width="854" height="400">
+            <img src=@file.path alt="picture" width="854" height="400">
         </div>
     }
 }
@@ -97,9 +97,9 @@ div class="row">
                 foreach (var file in files)
                 {
                     <tr>
-                        <td>@file.Filename</td>
-                        <td>@file.Date</td>
-                        <td>@file.Rating</td>
+                        <td>@file.filename</td>
+                        <td>@file.uploadDate</td>
+                        <td>@file.rating</td>
 
                     </tr>
                 }
@@ -127,9 +127,9 @@ div class="row">
     async void RateFile()
     {
         Files temp = new Files();
-        temp.Filename = "FILE NAME HERE!!!!!!!!!!!!";
-        temp.Rating = rating;
-       // temp.Username = "USER HERE!!!!!";
+        temp.filename = "FILE NAME HERE!!!!!!!!!!!!";
+        temp.rating = rating;
+        // temp.username = "USER HERE!!!!!";
         var ms = new MemoryStream();
     }
 

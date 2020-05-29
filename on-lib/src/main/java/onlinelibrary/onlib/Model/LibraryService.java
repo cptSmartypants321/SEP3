@@ -1,7 +1,7 @@
 package onlinelibrary.onlib.Model;
 
 import onlinelibrary.onlib.Shared.Account;
-import onlinelibrary.onlib.Shared.File;
+import onlinelibrary.onlib.Shared.Files;
 import onlinelibrary.onlib.Shared.PropertyChangeSubject;
 
 import java.util.ArrayList;
@@ -11,14 +11,14 @@ public interface LibraryService extends PropertyChangeSubject {
 
     // HTTP GET --> READ
 
-    HashMap<String, File> getAllFile();
+    HashMap<String, Files> getAllFile();
 
     // HTTP POST --> CREATE
-    public File addFile (File file);
+    public Files addFile (Files files);
 
-    HashMap<String, File> getFileFromDatabase();
+    HashMap<String, Files> getFileFromDatabase();
 
-    HashMap<String,File> getOwnFileFromDatabase(Account account);
+    HashMap<String, Files> getOwnFileFromDatabase(Account account);
 
     public void createAccount(Account account);
 
@@ -26,7 +26,7 @@ public interface LibraryService extends PropertyChangeSubject {
 
     public Account editAcc(Account account);
 
-    public File deleteFile(File file);
+    public Files deleteFile(Files files);
 
     public Account deleteAccount(Account account);
 

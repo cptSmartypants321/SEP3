@@ -1,7 +1,7 @@
 package onlinelibrary.onlib.Tier3.Shared;
 
 import onlinelibrary.onlib.Shared.Account;
-import onlinelibrary.onlib.Shared.File;
+import onlinelibrary.onlib.Shared.Files;
 import onlinelibrary.onlib.Tier3.Database.DatabaseInterface;
 
 import java.beans.PropertyChangeListener;
@@ -82,13 +82,13 @@ public class ModelImplementation implements Model {
     }
 
     @Override
-    public void addFile(File file) {
-        database.addFile(file);
+    public void addFile(Files files) {
+        database.addFile(files);
     }
 
     @Override
-    public void deleteFile(File file) {
-        database.deleteFile(file.getFileName());
+    public void deleteFile(Files files) {
+        database.deleteFile(files.getFileName());
     }
 
 }

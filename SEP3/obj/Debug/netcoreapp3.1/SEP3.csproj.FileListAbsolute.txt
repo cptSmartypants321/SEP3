@@ -554,3 +554,5 @@ C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\R
 C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\Razor\Shared\MainLayout.razor.g.cs
 C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\Razor\Shared\NavMenu.razor.g.cs
 C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\Razor\_Imports.razor.g.cs
+C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Test.razor.g.cs
+C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\Razor\Pages\Test.razor.g.cs

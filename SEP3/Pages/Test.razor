@@ -1,0 +1,25 @@
+﻿@page "/test"
+@using SEP3.Data
+<h3>ListBox</h3>
+<RadzenListBox @bind-Value="@value" Data="@categoryList" TextProperty="CompanyName" ValueProperty="CustomerID" Style="margin-bottom: 20px;height:200px;" Change="@(args => Change(args, "ListBox"))" />
+<br />
+
+
+@code{
+    IEnumerable<string> categoryList;
+   // Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
+    string value = "ALFKI";
+    protected override void OnInitialized()
+    {
+        List<string> categories = new List<string>();
+        categories.Add("math");
+        categories.Add("software");
+        categoryList = categories;
+    }
+    void Change(object value, string name)
+    {
+        var str = value is IEnumerable<object> ? string.Join(", ", (IEnumerable<object>)value) : value;
+        Console.WriteLine(str);
+        StateHasChanged();
+    }
+}

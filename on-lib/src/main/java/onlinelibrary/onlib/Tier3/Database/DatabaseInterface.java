@@ -2,7 +2,7 @@ package onlinelibrary.onlib.Tier3.Database;
 
 import onlinelibrary.onlib.Shared.Account;
 import onlinelibrary.onlib.Shared.Comment;
-import onlinelibrary.onlib.Shared.File;
+import onlinelibrary.onlib.Shared.Files;
 import onlinelibrary.onlib.Shared.Rating;
 
 import java.util.ArrayList;
@@ -17,11 +17,11 @@ public interface DatabaseInterface {
     String getTempEmail();
     boolean isAdmin(Account temp);
 
-    ArrayList<File> files();
-    void addFile(File file);
+    ArrayList<Files> files();
+    void addFile(Files files);
     void deleteFile(String filename);
-    void addRatingToFile(Rating rating, File file, Account account);
-    void addComment(File file, Comment comment, Account account);
-    ArrayList<Comment> comments(File files);
+    void addRatingToFile(Rating rating, Files files, Account account);
+    void addComment(Files files, Comment comment, Account account);
+    ArrayList<Comment> comments(Files files);
 
 }

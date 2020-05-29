@@ -1,7 +1,7 @@
 package onlinelibrary.onlib.Tier3.Shared;
 
 import onlinelibrary.onlib.Shared.Account;
-import onlinelibrary.onlib.Shared.File;
+import onlinelibrary.onlib.Shared.Files;
 import onlinelibrary.onlib.Shared.PropertyChangeSubject;
 
 public interface Model extends PropertyChangeSubject {
@@ -21,7 +21,7 @@ public interface Model extends PropertyChangeSubject {
 
     boolean isAdmin(Account temp);
 
-    void addFile(File file);
+    void addFile(Files files);
 
-    public void deleteFile(File file);
+    public void deleteFile(Files files);
 }

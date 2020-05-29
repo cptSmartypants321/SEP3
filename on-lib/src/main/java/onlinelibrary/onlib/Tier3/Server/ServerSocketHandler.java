@@ -1,7 +1,7 @@
 package onlinelibrary.onlib.Tier3.Server;
 
 import onlinelibrary.onlib.Shared.Account;
-import onlinelibrary.onlib.Shared.File;
+import onlinelibrary.onlib.Shared.Files;
 import onlinelibrary.onlib.Shared.Request;
 import onlinelibrary.onlib.Tier3.Shared.Model;
 
@@ -20,7 +20,7 @@ public class ServerSocketHandler implements Runnable{
     private Model model;
     private ArrayList<Account> accounts;
 
-    public static HashMap<String, File> FileHashmap;
+    public static HashMap<String, Files> FileHashmap;
 
     /**
      * A constuctor method  that initializes the Object input and output streams
@@ -83,8 +83,8 @@ public class ServerSocketHandler implements Runnable{
                 Request req= (Request)inFromClient.readObject();
                 if(req.type == Request.TYPE.FILES){
                     FileHashmap = new HashMap<>();
-                    File f1 = new File("GOESTOTOWN");
-                    File f2 = new File("JENSISHERE");
+                    Files f1 = new Files("GOESTOTOWN");
+                    Files f2 = new Files("JENSISHERE");
                     FileHashmap.put(f1.getFileName(),f1);
                     FileHashmap.put(f2.getFileName(),f2);
                     outToClient.writeObject(new Request(Request.TYPE.FILES, FileHashmap));
@@ -104,13 +104,13 @@ public class ServerSocketHandler implements Runnable{
                     System.out.println("Client disconnected :) ");
                 }
                 if(req.type == Request.TYPE.ADD){
-                    File file = (File)req.argument;
-                    System.out.println("Adding file to server " + file);
-                    model.addFile(file);
+                    Files files = (Files)req.argument;
+                    System.out.println("Adding file to server " + files);
+                    model.addFile(files);
 
                     // adds file to server folder
-                    recieveFle(file);
-                    outToClient.writeObject(new Request(Request.TYPE.ADD, file));
+                    recieveFle(files);
+                    outToClient.writeObject(new Request(Request.TYPE.ADD, files));
                 }
                 if (req.type == Request.TYPE.LOGIN) {
 
@@ -140,7 +140,7 @@ public class ServerSocketHandler implements Runnable{
 
                     // An if statement which if entered deletes a specific file.
                 } else if (req.type == Request.TYPE.REMOVE) {
-                    model.deleteFile((File)req.argument);
+                    model.deleteFile((Files)req.argument);
                     System.out.println("File: " + req.argument + " Deleted");
                     outToClient.writeObject(new Request(Request.TYPE.REMOVE, req.argument));
                     // TODO: 28-05-2020 needs to be deleted from FileServer as well
@@ -199,7 +199,7 @@ public class ServerSocketHandler implements Runnable{
         }
     }
 
-    public void recieveFle(File files)  {
+    public void recieveFle(Files files)  {
         // A name for the file to be received
         String FILE_TO_RECEIVED = files.getFileName();
         int bytesRead;
