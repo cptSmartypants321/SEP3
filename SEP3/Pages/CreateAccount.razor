@@ -1,4 +1,9 @@
 ﻿@page "/createaccount"
+@using  SEP3.Services
+@using SEP3.Data
+@inject HttpClient httpClient
+@inject IUserService userService
+@using System.ComponentModel.DataAnnotations
 
 <h3>Create a new Account</h3>
 <br />
@@ -6,22 +11,67 @@
 <h6>Please fill in the following information</h6>
 
 <br />
-<form>
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username"><br><br>
-    <label for="email">E-Mail:</label><br>
-    <input type="text" id="email" name="email"><br><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password"><br><br>
-    <label for="password">Confirm Password</label><br>
-    <input type="password" id="password" name="password"><br>
-</form>
-<br />
-<button class="btn btn-primary" @onclick="createaccount">Create Account</button>
-@code {
 
-    private void createaccount()
+<EditForm Model="@user" OnValidSubmit="@CreateAcc">
+    <DataAnnotationsValidator />
+    
+    <div class="col-12 row">
+        <label class="col-2 font-weight-bold">Username : </label>
+        <InputText class="form-control col-3" @bind-Value="user.username" placeholder="username" />
+        &nbsp;<ValidationMessage For="@(() => user.username)" />
+    </div>
+    <br />
+    <div class="col-12 row">
+        <label class="col-2 font-weight-bold">E-mail : </label>
+        <InputText class="form-control col-3" @bind-Value="user.email" placeholder="E-mail" />
+        &nbsp;<ValidationMessage For="@(() => user.email)" />
+    </div>
+    <br />
+    <div class="col-12 row">
+        <label class="col-2 font-weight-bold">Password : </label>
+        <input type="password" class="form-control col-3" @bind="user.password" placeholder="password" />
+        &nbsp;<ValidationMessage For="@(() => user.password)" />
+    </div>
+    <br />
+    <div class="col-12 row">
+        <label class="col-2 font-weight-bold">Confirm password : </label>
+        <input type="password" class="form-control col-3" @bind="confPass" placeholder="Confirm password" />
+        &nbsp;<ValidationMessage For="@(() => confPass)" />
+    </div>
+    <br />
+    <br />
+    <div class="col-12 row">
+        <span class="col-2"></span>
+        <input type="submit" class="form-control col-1 btn btn-primary" value="Create Account" />
+    </div>
+</EditForm>
+
+@code {
+    public User user;
+    [Required]
+    string confPass;
+
+    protected override void OnInitialized()
     {
-        // create account feature
+        user = new User();
+
     }
+    public async void CreateAcc()
+    {
+        if(user.password.Equals(confPass))
+        {
+            bool temp = await userService.CreateAccAsync(user);
+            Console.WriteLine($"*************** Create User ***********" + user);
+        }
+        else
+        {
+
+          // Display notification..
+        }
+
+
+
+
+    }
+
 }

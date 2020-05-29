@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Anton Anastasov\\Desktop\\VIA ICT\\SEP3\\SEP3\\SEP3\\SEP3.csproj": {}
+    "C:\\Users\\mathi\\OneDrive\\Skrivebord\\2020Collection\\SEP3\\SEP3.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Anton Anastasov\\Desktop\\VIA ICT\\SEP3\\SEP3\\SEP3\\SEP3.csproj": {
+    "C:\\Users\\mathi\\OneDrive\\Skrivebord\\2020Collection\\SEP3\\SEP3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Anton Anastasov\\Desktop\\VIA ICT\\SEP3\\SEP3\\SEP3\\SEP3.csproj",
+        "projectUniqueName": "C:\\Users\\mathi\\OneDrive\\Skrivebord\\2020Collection\\SEP3\\SEP3.csproj",
         "projectName": "SEP3",
-        "projectPath": "C:\\Users\\Anton Anastasov\\Desktop\\VIA ICT\\SEP3\\SEP3\\SEP3\\SEP3.csproj",
-        "packagesPath": "C:\\Users\\Anton Anastasov\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Anton Anastasov\\Desktop\\VIA ICT\\SEP3\\SEP3\\SEP3\\obj\\",
+        "projectPath": "C:\\Users\\mathi\\OneDrive\\Skrivebord\\2020Collection\\SEP3\\SEP3.csproj",
+        "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mathi\\OneDrive\\Skrivebord\\2020Collection\\SEP3\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Anton Anastasov\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -38,9 +38,39 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "BlazorInputFile": {
+              "target": "Package",
+              "version": "[0.2.0, )"
+            },
+            "Blazored.SessionStorage": {
+              "target": "Package",
+              "version": "[1.0.12, )"
+            },
+            "Microsoft.TypeScript.MSBuild": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.9.2, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.3, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.3, )"
+            },
+            "Radzen.Blazor": {
+              "target": "Package",
+              "version": "[2.9.6, )"
+            },
+            "Syncfusion.Blazor.PdfViewerServer.Windows": {
+              "target": "Package",
+              "version": "[18.1.0.53, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[4.7.2, )"
             }
           },
           "imports": [
@@ -61,7 +91,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

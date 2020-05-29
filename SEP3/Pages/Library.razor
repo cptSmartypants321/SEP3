@@ -73,9 +73,11 @@
             bookList.Add(bookarr);
         };
          HttpResponseMessage response = await httpClient.GetAsync("http://localhost:8080/OnlineLibrary/");
+        Console.WriteLine("THIS IS THE PLACE");
+
         Console.WriteLine(response.IsSuccessStatusCode);
         string responseBody = await response.Content.ReadAsStringAsync();
-        var print = book.getJson(responseBody);
+        var print = book.GetJson(responseBody);
         Console.WriteLine(print.ToString());
     }
 

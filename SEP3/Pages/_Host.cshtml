@@ -1,5 +1,6 @@
 ﻿
 @page "/"
+@using SEP3
 @namespace SEP3.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
@@ -9,16 +10,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SEP3</title>
     <base href="~/" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
+    <link href="_content/Syncfusion.Blazor/styles/material.css" rel="stylesheet" />
+    <script src="_content/BlazorInputFile/inputfile.js"></script>
+    <link rel="stylesheet" href="_content/Radzen.Blazor/css/default-base.css">
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+
+
+
 </head>
 <body>
     <app>
-        <component type="typeof(App)" render-mode="ServerPrerendered" />
+        <component type="typeof(App)" render-mode="Server" />
     </app>
 
     <div id="blazor-error-ui">
@@ -33,5 +42,7 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
+    
+
 </body>
 </html>

@@ -1,0 +1,137 @@
+﻿@page "/webviewer"
+@inject IJSRuntime JSRuntime
+@inject NavigationManager navManager
+@namespace SEP3.js
+@using Syncfusion.Blazor.PdfViewerServer
+@using SEP3.Data
+@using Radzen.Blazor
+@using System.Collections.Generic
+@using System.Data
+@inject NotificationService notificationService
+@using System.IO
+
+
+
+
+<style>
+    #pdf {
+        margin: 20px;
+    }
+
+    #comment {
+        align-content: center;
+        text-align: center;
+    }
+
+    #text {
+        border-radius: 5px;
+        border: 4px solid #4267B2;
+        margin: 20px;
+        padding: 10px;
+    }
+
+
+    table, th, td {
+        border: 2px solid black;
+        margin-right: 50px;
+    }
+
+    th {
+        background-color: lightgray;
+        color: white;
+    }
+</style>
+
+
+<div>
+    <label class="font-weight-bold col-6" style="color: #4267B2; left:5%; font-size:30px; ">Filename</label>
+
+</div>
+
+div class="row">
+<div class="col-md-6">
+    <h3>Rating with 5 stars</h3>
+    <RadzenRating Style="margin-bottom: 20px" Change="@((args) => Change(args, "Rating with 5 stars"))" />
+    <br />
+</div>
+
+@foreach (var file in files)
+{
+    if (file.Format == "pdf")
+    {
+        <SfPdfViewerServer DocumentPath=@file.Path Height="650px" Width="1060" ID="pdf"></SfPdfViewerServer>
+    }
+    if (file.Format == "mp4" || file.Format == "ogg")
+    {
+        <div class="col-10" style="left: 15%">
+            <video controls poster=@file.Path width="854" height="480">
+                <source src="movie.mp4" type="video/mp4">
+                <source src="movie.ogg" type="video/ogg">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    }
+    if (file.Format == "png" || file.Format == "jpg" || file.Format == "jpeg")
+    {
+        <div class="col-10" style="left: 15%">
+            <img src=@file.Path alt="picture" width="854" height="400">
+        </div>
+    }
+}
+
+
+
+<div class="col-10 row" style="left:10%">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-1">Comment</th>
+                <th class="col-10">Name</th>
+                <th class="col-2">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    <tr>
+                        <td>@file.Filename</td>
+                        <td>@file.Date</td>
+                        <td>@file.Rating</td>
+
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<form action="/action_page.php" id="comment">
+    <textarea name="message" rows="8" cols="80" id="text"></textarea>
+    <br><br>
+    <input type="submit" class="form-control btn btn-primary col-2" value="Post Comment">
+</form>
+
+
+@code{
+    public int rating;
+    public String pdf = "pfd";
+    public List<Files> files = new List<Files>();
+    Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
+    void Change(int value, string name)
+    {
+        events.Add(DateTime.Now, $"{name} value changed to {value}");
+    }
+    async void RateFile()
+    {
+        Files temp = new Files();
+        temp.Filename = "FILE NAME HERE!!!!!!!!!!!!";
+        temp.Rating = rating;
+       // temp.Username = "USER HERE!!!!!";
+        var ms = new MemoryStream();
+    }
+
+}
+

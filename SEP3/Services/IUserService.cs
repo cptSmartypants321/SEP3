@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SEP3.Data;
 
 namespace SEP3.Services
 {
@@ -9,8 +10,11 @@ namespace SEP3.Services
     {
        
            // public Task<User> LogInAsync(User user);
-            public bool Login();
-            
-        
+
+         public  Task<User> LoginAsync(User user);
+        public Task<bool> CreateAccAsync(User user);
+
+
+
     }
 }

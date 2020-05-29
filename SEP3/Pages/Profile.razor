@@ -1,0 +1,175 @@
+﻿@page "/profile"
+@using SEP3.Data
+@using  SEP3.Services
+@inject IUserService userService
+@inject NavigationManager navManager
+
+
+
+
+<style>
+
+    h2{
+        margin-left: 20px;
+    }
+    #profile {
+        border-radius: 5px;
+        border: 4px solid #4267B2;
+        margin: 20px;
+        padding: 10px;
+    }
+
+    #editprofile {
+        border-radius: 5px;
+        margin: 20px;
+        border: 4px solid #4267B2;
+        padding: 10px;
+    }
+    
+    table,th,td{
+        
+        border : 2px solid black;
+        margin-right: 50px;
+
+    }
+
+    th {
+        background-color: #4267B2;
+        color: white;
+    }
+
+  
+
+</style>
+<AuthorizeView>
+    <Authorized>
+        <EditForm Model="@user" OnValidSubmit="@UpdateAccount">
+            <ChildContent Context="another_name">
+                <div class="col-6 row float-right">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>File Name</th>
+                                <th>Date</th>
+                                <th>Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (files != null)
+                            {
+                                foreach (var file in files)
+                                {
+                                    <tr>
+                                        <td>@file.Filename</td>
+                                        <td>@file.Date</td>
+                                        <td>@file.Rating</td>
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div id="profile" class="col-4">
+                    <div style="text-align:center">
+                        <label class="font-weight-bold" style="color: #4267B2; font-size:25px; ">Account Info</label>
+                    </div>
+
+                    <br />
+
+                    <label class="font-weight">user.username</label>
+                    <br />
+                    <br />
+                    <label class="font-weight">My@email.com</label>
+                    <br />
+                </div>
+
+
+
+                <div id="editprofile" class="col-4" style="align-content: center">
+                    <div>
+                        <div style="text-align:center">
+                            <label class="font-weight-bold" style="color: #4267B2; font-size:25px; ">Edit Account</label>
+                        </div>
+
+                    </div>
+
+                    <br />
+                    <div>
+                        <label class="font-weight">Your Current Password </label>
+                        <input type="password" class="form-control col-8 font-italic" style="left: 15%; text-align: center; " @bind="user.password" placeholder="Password" />
+
+                    </div>
+                    <br />
+
+                    <br />
+                    <div style="">
+                        <label class="font-weight">The New Password </label>
+                        <input type="password" class="form-control col-8 font-italic" style="left:15%; text-align:center;" @bind="user.password" placeholder="Password" />
+
+                    </div>
+                    <br>
+                    <br />
+                    <div>
+                        <label class="font-weight">The New Email </label>
+                        <input type="email" class="form-control col-8 font-italic" style="left:15%; text-align:center;" @bind="user.email" placeholder="My@email.com" />
+
+                    </div>
+                    <br />
+                    <br />
+                    <div class="col-6" style="left:23%">
+                        <input type="submit" class="form-control btn btn-primary" value="Save Changes" />
+                        <span>&nbsp;</span>
+                        <!--<button class="btn btn-primary" @onclick="createAccountPage">Create Account</button>-->
+                        <!-- <input type="submit" class="form-control col-2 btn btn-primary" value="Create account" /> -->
+                    </div>
+                </div>
+            </ChildContent>
+        </EditForm>
+    </Authorized>
+    <NotAuthorized>
+        @if (true)
+        {
+            navManager.NavigateTo("/");
+        }
+
+    </NotAuthorized>
+</AuthorizeView>
+       
+
+        @code {
+
+            public IList<Files> files;
+            public User user;
+            public bool isCorrect;
+            public String username;
+
+            protected override async Task OnInitializedAsync()
+            {
+                user = new User();
+                Console.WriteLine(user.username);
+
+
+            }
+
+
+
+            public void UpdateAccount()
+            {
+
+
+            }
+
+            private async Task<bool> createAccountPage()
+            {
+                Console.WriteLine("*************** USER ACCOUNT CREATE******************");
+                return await Task.FromResult(true);
+            }
+
+
+
+
+        }

@@ -6,7 +6,13 @@ using Microsoft.Extensions.Hosting;
 using System.Net.Http;
 using Microsoft.AspNetCore.Http;
 using SEP3.Services;
+using Syncfusion.Blazor;
 using SEP3.Data;
+using Blazored.SessionStorage;
+using Microsoft.AspNetCore.Components.Authorization;
+using Radzen;
+
+using System;
 
 namespace SEP3
 {
@@ -23,12 +29,18 @@ namespace SEP3
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+         
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<BookService>();
             services.AddSingleton<IUserService,UserService>();
-            services.AddSingleton<HttpClient>();
+            services.AddSingleton(new HttpClient { BaseAddress = new Uri("https://localhost:8443") });
+            services.AddSyncfusionBlazor();
+            services.AddServerSideBlazor().AddHubOptions(o => { o.MaximumReceiveMessageSize = 102400000; });
+            services.AddBlazoredSessionStorage();
+            services.AddSingleton<NotificationService>();
+            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
             
         }
@@ -36,6 +48,7 @@ namespace SEP3
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjYyNzExQDMxMzgyZTMxMmUzMFdwdGxFUERsVlJHOXI0U3BqcGN6SFV2bkgyMHpLZTNnMU9qYkpwUVBOQUE9");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -51,6 +64,10 @@ namespace SEP3
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {

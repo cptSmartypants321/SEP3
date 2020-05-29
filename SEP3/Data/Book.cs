@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace SEP3.Data
 {
@@ -13,7 +13,6 @@ namespace SEP3.Data
     [Required]
         public String Name{ get; set; }
         [Required]
-        public Category Category { get; set; }
 
         public byte[] ByteArray { get; set; }
 
@@ -24,7 +23,7 @@ namespace SEP3.Data
         public string FileID { get; set; }
         public Object getJson(string temp)
         {
-             return JsonConvert.DeserializeObject(temp);
+            return JsonSerializer.Deserialize<Object>(temp);
 
         }
        

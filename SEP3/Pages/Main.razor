@@ -1,0 +1,194 @@
+﻿@page "/main"
+@using SEP3.Data
+@using SEP3.Services
+@inject HttpClient httpClient
+@inject IUserService userService
+@inject NavigationManager navManager
+@inject BookService bookServce
+@using System.Text.Json
+@using BlazorInputFile;
+@using System.IO;
+@using System.Net.Http;  
+
+
+
+
+<style>
+
+    h4 {
+        margin: auto;
+        left: 35%;
+        position: absolute;
+    }
+
+    table, td, th {
+        border: 2px solid black;
+    }
+
+    #catagory {
+        font-size: medium;
+    }
+</style>
+
+
+
+<AuthorizeView>
+    <Authorized>
+        <EditForm Model="@book" OnValidSubmit="@SaveBook">
+            <ChildContent Context="another_name">
+                <div class="col-12">
+                    <label for="catagory" style="font-size: 18px; text-align: center; color: #4267B2" ;>Choose Catagory </label>
+                    <br />
+                    <br />
+                    <div class="col-12 row">
+                        <div class="col-2">
+                            <select name="catagory" id="catagory">
+                                <option value="math">Math</option>
+                                <option value="physics">Physics</option>
+                                <option value="chemistry">Chemistry</option>
+                                <option value="geography">Geography</option>
+                                <option value="literature">Literature</option>
+                                <option value="construction">Construction</option>
+                                <option value="marketing">Marketing</option>
+                            </select>
+                        </div>
+                        <InputText class="form-control col-8" @bind-Value="book.Name" placeholder="Search for files" />
+                        <input type="submit" class="form-control col-1 btn btn-primary align-content-center" style="margin-left:20px" value="search" />
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="col-12" style="text-align:center">
+                    <label class="font-weight-bold" style="color: #4267B2; font-size:35px; ">Viewable Content</label>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Filename</th>
+                            <th>Upload Date</th>
+                            <th>Owner</th>
+                            <th>File Format</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (bookList != null)
+                        {
+                            foreach (var file in bookList)
+                            {
+                                <tr>
+                                    <td><a href="/webviewer">@file.Name </a></td>
+                                    <td>@file.Date</td>
+                                    <td>@file.FileID</td>
+                                    <td>@file.Owner</td>
+                                    <td>@file.Size</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <div class="col-12 row" style="left:45%">
+                    <input type="submit" class="form-control col-1 btn btn-primary align-content-center" value="View" />
+                </div>
+                <br />
+                <br />
+                <div style="border: 3px solid #4267B2">
+                    <label class="font-weight-bold" style="color: #4267B2; font-size:15px; ">Choose a Catagory to Upload</label>
+                    <div class="col-2">
+                        <select name="catagory" id="catagory">
+                            <option value="math">Math</option>
+                            <option value="physics">Physics</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="geography">Geography</option>
+                            <option value="literature">Literature</option>
+                            <option value="construction">Construction</option>
+                            <option value="marketing">Marketing</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="button" @onclick="UploadFile" class="form-control col-1 btn btn-primary" style="margin:10px" value="Upload File" />
+                        <InputFile OnChange="HandleFileSelected" />
+                    </div>
+                </div>
+
+            </ChildContent>
+        </EditForm>
+    </Authorized>
+    <NotAuthorized>
+        @if (true)
+        {
+            navManager.NavigateTo("/");
+        }
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+
+    public Book book { get; set; }
+    public List<Book> bookList;
+    IFileListEntry file;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        book = new Book();
+        Book[] temp = await bookServce.GetAllBookAsync();
+
+        bookList = new List<Book>();
+        foreach (var bookarr in temp)
+        {
+            bookList.Add(bookarr);
+        };
+        //TODO: google ServerCertificateCustomValidationCallback when you realise that it cannot accept self signed certificates
+        HttpResponseMessage response = await httpClient.GetAsync("https://localhost:8443/OnlineLibrary/main");
+        Console.WriteLine(response.IsSuccessStatusCode);
+        string responseBody = await response.Content.ReadAsStringAsync();
+        var print = book.getJson(responseBody);
+        //TODO Work on it tommorow: Display the file from the api
+        //var plzwork = JsonSerializer.Deserialize<Object>(response.Content.);
+        Console.WriteLine($"response body: {responseBody.ToString()}");
+
+    }
+
+    public void SaveBook()
+    {
+        var title = book.Name;
+        Book temp = new Book();
+        temp.Name = title;
+        bookList.Add(temp);
+        book = new Book();
+
+    }
+
+
+    void HandleFileSelected(IFileListEntry[] files)
+    {
+        file = files.FirstOrDefault();
+    }
+
+    async void UploadFile()
+    {
+        Files temp = new Files();
+        temp.Filename = file.Name;
+        temp.Format = file.Type;
+        temp.Filesize = (int)file.Size;
+        var ms = new MemoryStream();
+        if (file != null)
+        {
+            // Just load into .NET memory to show it can be done
+            // Alternatively it could be saved to disk, or parsed in memory, or similar
+            await file.Data.CopyToAsync(ms);
+        }
+        Console.WriteLine("Hello" + temp.Filename);
+        //byte[] bytes = ms.ToArray();
+        // Console.WriteLine(bytes.Length);
+        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "OnlineLibrary/add");
+        request.Content = new StreamContent(ms);
+        //waiting for response
+        // var response = await httpClient.SendAsync(request);
+        HttpResponseMessage response = await httpClient.SendAsync(request);
+    }
+
+}
