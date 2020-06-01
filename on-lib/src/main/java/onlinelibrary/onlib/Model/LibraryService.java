@@ -16,7 +16,7 @@ public interface LibraryService extends PropertyChangeSubject {
     // HTTP POST --> CREATE
     public Files addFile (Files files);
 
-    HashMap<String, Files> getFileFromDatabase();
+    Files[] getFileFromDatabase();
 
     HashMap<String, Files> getOwnFileFromDatabase(Account account);
 

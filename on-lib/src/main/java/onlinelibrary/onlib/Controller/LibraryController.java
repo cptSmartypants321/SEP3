@@ -23,6 +23,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @RestController
@@ -48,7 +49,7 @@ public class LibraryController {
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public ResponseEntity<Object> getAllFiles(){
-        HashMap<String, Files> files = libraryService.getAllFile();
+        Files[] files = libraryService.getFileFromDatabase();
         if(files.equals(null)){
             return new ResponseEntity<>("SHIT WENT DONW",HttpStatus.BAD_REQUEST);
         } else {
@@ -108,7 +109,10 @@ public class LibraryController {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<Files> ref = new TypeReference<Files>(){};
         Files files = mapper.readValue(name, ref);
+        String[] path = files.getFileName().split("\\.");
+        System.out.println("Format: " + path[1]);
         files.setCategory();
+        files.setFormat(path[1]);
         System.out.println("File Received from Blazor: " + files.getFileName() + " Owner: " + files.getUsername());
         System.out.println(files.getFileName() + " Username " + files.getUsername() + "Rating: " + files.getRating() + " Category: " +files.isChemistry());
 

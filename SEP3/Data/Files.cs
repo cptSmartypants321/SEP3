@@ -16,7 +16,7 @@ namespace SEP3.Data
 
         public string username { get; set; }
         [Required]
-        public DateTime uploadDate { get; set; }
+        public string uploadDate { get; set; }
 
 
         public String format { get; set; }

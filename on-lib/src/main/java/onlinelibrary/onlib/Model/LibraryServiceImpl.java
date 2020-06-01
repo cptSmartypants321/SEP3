@@ -57,9 +57,9 @@ public class LibraryServiceImpl implements LibraryService{
     }
 
     @Override
-    public HashMap<String, Files> getFileFromDatabase() {
+    public Files[] getFileFromDatabase() {
 
-        return (HashMap<String, Files>) clientMain.SendToServer2(Request.TYPE.FILES, null);
+        return (Files[]) clientMain.SendToServer2(Request.TYPE.FILES, null);
     }
 
     @Override

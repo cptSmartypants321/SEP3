@@ -82,12 +82,20 @@ public class ServerSocketHandler implements Runnable{
                 //Request req= (Request)convertReq(temp);
                 Request req= (Request)inFromClient.readObject();
                 if(req.type == Request.TYPE.FILES){
-                    FileHashmap = new HashMap<>();
-                    Files f1 = new Files("GOESTOTOWN");
-                    Files f2 = new Files("JENSISHERE");
-                    FileHashmap.put(f1.getFileName(),f1);
-                    FileHashmap.put(f2.getFileName(),f2);
-                    outToClient.writeObject(new Request(Request.TYPE.FILES, FileHashmap));
+                    //FileHashmap = new HashMap<>();
+                    //Files f1 = new Files("GOESTOTOWN");
+                    //Files f2 = new Files("JENSISHERE");
+                    //FileHashmap.put(f1.getFileName(),f1);
+                    //FileHashmap.put(f2.getFileName(),f2);
+
+                    ArrayList<Files> files = (ArrayList<Files>)model.getFiles();
+                    Files[] filesToSend= new Files[files.size()];
+                    for (int i=0;i <files.size();i++)
+                    {
+                        filesToSend[i]= files.get(i);
+                    }
+                    System.out.println("Sending filelist to client: " + filesToSend);
+                    outToClient.writeObject(new Request(Request.TYPE.FILES, filesToSend));
                 }
                 if(req.type == Request.TYPE.OWNFILES){
                     // TODO: 27-05-2020 do shit
@@ -106,7 +114,9 @@ public class ServerSocketHandler implements Runnable{
                 if(req.type == Request.TYPE.ADD){
                     Files files = (Files)req.argument;
                     System.out.println("Adding file to server " + files);
+                    files.setPath("C:\\Users\\mathi\\OneDrive\\Skrivebord\\2020Collection\\on-lib\\FileServer\\" + files.getFileName());
                     model.addFile(files);
+
 
                     // adds file to server folder
                     recieveFle(files);

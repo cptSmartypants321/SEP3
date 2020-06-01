@@ -91,4 +91,9 @@ public class ModelImplementation implements Model {
         database.deleteFile(files.getFileName());
     }
 
+    @Override
+    public Object getFiles() {
+        return database.files();
+    }
+
 }

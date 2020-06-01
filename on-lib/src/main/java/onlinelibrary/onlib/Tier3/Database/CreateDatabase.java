@@ -26,7 +26,7 @@ public class CreateDatabase {
 
 
         // Change the pw String to your password and run it one time only!
-        String pw = "k4j4mnzswek";
+        String pw = "mat000";
 
         Connection connection = null;
 
@@ -76,6 +76,7 @@ public class CreateDatabase {
         }
 
         addUserToDatabase(preparedStatement, "test", "test", "testemail3", true);
+        addUserToDatabase(preparedStatement, "mat", "mat", "mat@gmail.com", true);
 
 
         try {
@@ -118,17 +119,18 @@ public class CreateDatabase {
                 + "  uploadDate VARCHAR NOT NULL , "
                 + "  format varchar(50) NOT NULL , "
 
+                + "  filesize integer NOT NULL , "
+                + "  path varchar,"
+                + "  rating integer , "
+
                 + "  math boolean, "
                 + "  physics boolean , "
                 + "  chemistry boolean , "
                 + "  geography boolean , "
                 + "  literature boolean , "
                 + "  construction boolean, "
-                + "  marketing boolean, "
-
-                + "  filesize integer NOT NULL , "
-                + "  rating integer , "
-                + "  path varchar(50) NOT NULL"+ ");";
+                + "  marketing boolean "
+             + ");";
 
         try {
             Statement statement = connection.createStatement();
@@ -137,8 +139,8 @@ public class CreateDatabase {
             e.printStackTrace();
         }
 
-        String preparedSql2 = "INSERT INTO \"ViaOnlineLibrary\".files (filename, username, uploadDate, format, math, physics," +
-                " chemistry, geography, literature, construction, marketing, filesize, rating, path) "
+        String preparedSql2 = "INSERT INTO \"ViaOnlineLibrary\".files (filename, username, uploadDate, format,filesize, path, rating, math, physics," +
+                " chemistry, geography, literature, construction, marketing) "
                 + "SELECT * FROM (SELECT ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?) AS tmp ";
 
         PreparedStatement preparedStatement2 = null;
@@ -147,7 +149,7 @@ public class CreateDatabase {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        addFileToDatabase(preparedStatement2, "TestFile","Jakob", "22/01/2019","png",true,false,false,false,false,false,false,1200,4,"/s");
+        addFileToDatabase(preparedStatement2, "TestFile","Jakob", "22/01/2019","png",1200,"/s",4,true,false,false,false,false,false,false);
 
 
 
@@ -175,10 +177,6 @@ public class CreateDatabase {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        Comment comment = new Comment("This file is shit ! Dont ever use it!");
-
-        addCommentToDatabase(preparedStatement3,"File1","Jakob", comment.getComment(),comment.getNow());
 
 
 
@@ -232,22 +230,23 @@ public class CreateDatabase {
 
 
 
-    private static void addFileToDatabase(PreparedStatement preparedStatement2, String filename, String username, String uploadDate, String format, boolean math, boolean physics, boolean chemistry, boolean geography, boolean literature, boolean construction, boolean marketing,  Integer filesize, Integer rating, String path) {
+    private static void addFileToDatabase(PreparedStatement preparedStatement2, String filename, String username, String uploadDate, String format, Integer filesize, String path,Integer rating, boolean math, boolean physics, boolean chemistry, boolean geography, boolean literature, boolean construction, boolean marketing) {
         try {
             preparedStatement2.setString(1, filename);
             preparedStatement2.setString(2, username);
             preparedStatement2.setString(3, uploadDate);
             preparedStatement2.setString(4, format);
-            preparedStatement2.setBoolean(5, math);
-            preparedStatement2.setBoolean(6, physics);
-            preparedStatement2.setBoolean(7, chemistry);
-            preparedStatement2.setBoolean(8, geography);
-            preparedStatement2.setBoolean(9, literature);
-            preparedStatement2.setBoolean(10, construction);
-            preparedStatement2.setBoolean(11, marketing);
-            preparedStatement2.setInt(12, filesize);
-            preparedStatement2.setInt(13, rating);
-            preparedStatement2.setString(14, path);
+            preparedStatement2.setInt(5, filesize);
+            preparedStatement2.setString(6, path);
+            preparedStatement2.setInt(7, rating);
+
+            preparedStatement2.setBoolean(8, math);
+            preparedStatement2.setBoolean(9, physics);
+            preparedStatement2.setBoolean(10, chemistry);
+            preparedStatement2.setBoolean(11, geography);
+            preparedStatement2.setBoolean(12, literature);
+            preparedStatement2.setBoolean(13, construction);
+            preparedStatement2.setBoolean(14, marketing);
             preparedStatement2.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

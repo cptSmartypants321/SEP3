@@ -330,7 +330,7 @@ public class Database implements DatabaseInterface {
             if(rs.next()==false)
             {
                 String preparedSql = "INSERT INTO \"ViaOnlineLibrary\".files (filename, username, uploadDate, format, filesize, path , rating, math, physics, chemistry, geography, literature, construction, marketing)" +
-                        "SELECT * FROM (SELECT ?, ?,?,?,?,?,?,?,?,?,?,?) AS tmp";
+                        "SELECT * FROM (SELECT ?, ?,?,?,?,?,?,?,?,?,?,?,?,?) AS tmp";
                 try {
                     preparedStatement = c.prepareStatement(preparedSql);
                 } catch (SQLException e) {
@@ -542,8 +542,9 @@ public class Database implements DatabaseInterface {
             preparedStatement2.setString(3, uploadDate);
             preparedStatement2.setString(4, format);
             preparedStatement2.setInt(5, filesize);
-            preparedStatement2.setInt(6, rating);
-            preparedStatement2.setString(7, path);
+            preparedStatement2.setString(6, path);
+            preparedStatement2.setInt(7, rating);
+
             preparedStatement2.setBoolean(8, math);
             preparedStatement2.setBoolean(9, physics);
             preparedStatement2.setBoolean(10, chemistry);

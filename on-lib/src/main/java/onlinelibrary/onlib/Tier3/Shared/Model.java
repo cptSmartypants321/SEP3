@@ -24,4 +24,6 @@ public interface Model extends PropertyChangeSubject {
     void addFile(Files files);
 
     public void deleteFile(Files files);
+
+    Object getFiles();
 }

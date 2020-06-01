@@ -70,6 +70,7 @@
                             <th>Owner</th>
                             <th>File Format</th>
                             <th>Rating</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -78,11 +79,11 @@
                             foreach (var file in bookList)
                             {
                                 <tr>
-                                    <td><a href="/webviewer">@file.Name </a></td>
-                                    <td>@file.Date</td>
-                                    <td>@file.FileID</td>
-                                    <td>@file.Owner</td>
-                                    <td>@file.Size</td>
+                                    <td><a href="/webviewer">@file.filename </a></td>
+                                    <td>@file.uploadDate</td>
+                                    <td>@file.username</td>
+                                    <td>@file.format</td>
+                                    <td>@file.rating</td>
                                 </tr>
                             }
                         }
@@ -125,7 +126,7 @@
 @code {
 
     public Book book { get; set; }
-    public List<Book> bookList;
+    public List<Files> bookList;
     IFileListEntry file;
     string value="ListBox";
     string categoryName;
@@ -137,18 +138,22 @@
 
         categoryList = new string[] { "Math", "Biology","Physics","Chemistry","Geography","Literature","Costruction","Marketing" };
         book = new Book();
-        Book[] temp = await bookServce.GetAllBookAsync();
 
-        bookList = new List<Book>();
-        foreach (var bookarr in temp)
-        {
-            bookList.Add(bookarr);
-        };
+
+        bookList = new List<Files>();
+
 
         //TODO: google ServerCertificateCustomValidationCallback when you realise that it cannot accept self signed certificates
         HttpResponseMessage response = await httpClient.GetAsync("https://localhost:8443/OnlineLibrary/main");
         Console.WriteLine(response.IsSuccessStatusCode);
         string responseBody = await response.Content.ReadAsStringAsync();
+
+        Files[] fileArray=JsonSerializer.Deserialize<Files []>(responseBody);
+        Console.WriteLine("File list " + fileArray[0].filename);
+        foreach (var files in fileArray)
+        {
+            bookList.Add(files);
+        };
         var print = book.getJson(responseBody);
         //TODO Work on it tommorow: Display the file from the api
         //var plzwork = JsonSerializer.Deserialize<Object>(response.Content.);
@@ -158,11 +163,11 @@
 
     public void SaveBook()
     {
-        var title = book.Name;
-        Book temp = new Book();
-        temp.Name = title;
-        bookList.Add(temp);
-        book = new Book();
+        //var title = book.Name;
+        // Book temp = new Book();
+        //temp.Name = title;
+        //bookList.Add(temp);
+        //book = new Book();
 
     }
 
@@ -186,12 +191,18 @@
             await file.Data.CopyToAsync(ms);
 
         }
-        DateTime timestamp = new DateTime();
+        string now = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
+
+
+
+
         byte[] byteArray = ms.ToArray();
         String fileUsername = await sessionStorage.GetItemAsync<string>("username");
-        Files file1 = new Files { filename = file.Name, username = fileUsername, uploadDate = timestamp.Date, format=file.Type,
+        Files file1 = new Files { filename = file.Name, username = fileUsername, uploadDate = now, format=file.Type,
             filesize= (int)file.Size,category=categoryName ,mybytearray = byteArray,};
-        
+
+        Console.WriteLine("FORMAT: " + file.Type);
+
         string fileJsonToSend = JsonSerializer.Serialize(file1);
 
         HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "OnlineLibrary/add");
@@ -200,7 +211,15 @@
         Console.WriteLine("SendingFile " + file.Data);
 
         HttpResponseMessage response = await httpClient.SendAsync(request);
+
+        string responseBody = await response.Content.ReadAsStringAsync();
+        Files fileRecieved = JsonSerializer.Deserialize<Files>(responseBody);
+
         Console.WriteLine("Response status:" + response.StatusCode);
+        Console.WriteLine("File back: " + fileRecieved.filename);
+        bookList.Add(fileRecieved);
+        navManager.NavigateTo("/main");
+        
     }
     void Change(object value, string name)
     {
@@ -209,6 +228,6 @@
         Console.WriteLine(categoryName);
         StateHasChanged();
     }
-   
+
 
 }
