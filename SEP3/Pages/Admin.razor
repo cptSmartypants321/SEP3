@@ -3,6 +3,7 @@
 @using  SEP3.Services
 @inject IUserService userService
 @inject NavigationManager navManager
+
 <style>
     h2 {
         margin-left: 20px;
@@ -32,81 +33,97 @@
         color: white;
     }
 </style>
-<EditForm Model="@user" OnValidSubmit="@UpdateAccount">
-    <div style="left: 50%" class="col-6">
-        <InputText class="form-control" @bind-Value="user.username" placeholder="Search for users" />
-    </div>
-    <br />
-    <div class="col-6 row float-right">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (files != null)
-                {
-                    foreach (var file in files)
-                    {
-                        <tr>
-                            <td>@file.filename</td>
-                            <td>@file.uploadDate</td>
-                            <td>@file.rating</td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-    <div id="editprofile" class="col-4" style="align-content: center">
-        <div>
-            <div style="text-align:center">
-                <label class="font-weight-bold" style="color: #4267B2; font-size:25px; ">Create an Account</label>
-            </div>
-        </div>
-        <br />
-        <div>
-            <label class="font-weight">Your Current Password </label>
-            <input type="password" class="form-control col-8 font-italic" style="left: 15%; text-align: center; " @bind="user.password" placeholder="Password" />
-        </div>
-        <br />
-        <br />
-        <div style="">
-            <label class="font-weight">The New Password </label>
-            <input type="password" class="form-control col-8 font-italic" style="left:15%; text-align:center;" @bind="user.password" placeholder="Password" />
-        </div>
-        <br>
-        <br />
-        <div>
-            <label class="font-weight">The New Email </label>
-            <input type="email" class="form-control col-8 font-italic" style="left:15%; text-align:center;" @bind="user.email" placeholder="My@email.com" />
-        </div>
-        <br />
-        <div>
-            <label class="font-weight">Admin </label>
-            <input type="radio" id="isadmin" name="isAdmin" value="admin">
-        </div>
-        <br />
-        <div class="col-6" style="left:23%">
-            <input type="submit" class="form-control btn btn-primary" value="Create" />
-            <span>&nbsp;</span>
-            <!--<button class="btn btn-primary" @onclick="createAccountPage">Create Account</button>-->
-            <!-- <input type="submit" class="form-control col-2 btn btn-primary" value="Create account" /> -->
-        </div>
-    </div>
-</EditForm>
+<AuthorizeView >
+    <Authorized>
+        <EditForm Model="@user" OnValidSubmit="@UpdateAccount">
+            <ChildContent Context="another_name">
+                <div style="left: 50%" class="col-6">
+                    <InputText class="form-control" @bind-Value="user.username" placeholder="Search for users" />
+                </div>
+                <br />
+                <div class="col-6 row float-right">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (userlist != null)
+                            {
+                                foreach (var users in userlist)
+                                {
+                                    <tr>
+                                        <td>@users.username</td>
+                                        <td>@users.email</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div id="editprofile" class="col-4" style="align-content: center">
+                    <div>
+                        <div style="text-align:center">
+                            <label class="font-weight-bold" style="color: #4267B2; font-size:25px; ">Create an Account</label>
+                        </div>
+                    </div>
+                    <br />
+                    <div>
+                        <label class="font-weight">Your Current Password </label>
+                        <input type="password" class="form-control col-8 font-italic" style="left: 15%; text-align: center; " @bind="user.password" placeholder="Password" />
+                    </div>
+                    <br />
+                    <br />
+                    <div style="">
+                        <label class="font-weight">The New Password </label>
+                        <input type="password" class="form-control col-8 font-italic" style="left:15%; text-align:center;" @bind="user.password" placeholder="Password" />
+                    </div>
+                    <br>
+                    <br />
+                    <div>
+                        <label class="font-weight">The New Email </label>
+                        <input type="email" class="form-control col-8 font-italic" style="left:15%; text-align:center;" @bind="user.email" placeholder="My@email.com" />
+                    </div>
+                    <br />
+                    <div>
+                        <label class="font-weight">Admin </label>
+                        <input type="radio" id="isadmin" name="isAdmin" value="admin">
+                    </div>
+                    <br />
+                    <div class="col-6" style="left:23%">
+                        <input type="submit" class="form-control btn btn-primary" value="Create" />
+                        <span>&nbsp;</span>
+                        <!--<button class="btn btn-primary" @onclick="createAccountPage">Create Account</button>-->
+                        <!-- <input type="submit" class="form-control col-2 btn btn-primary" value="Create account" /> -->
+                    </div>
+                </div>
+            </ChildContent>
+        </EditForm>
+    </Authorized>
+    <NotAuthorized>
+        @if (true)
+        {
+            navManager.NavigateTo("/");
+        }
+    </NotAuthorized>
+</AuthorizeView>
 @code {
     public IList<Files> files;
     public User user;
     public bool isCorrect;
+    public List<User> userlist;
     protected override async Task OnInitializedAsync()
     {
         user = new User();
+        userlist = await userService.getAllUsers();
+
+
     }
     public void UpdateAccount()
     {
+
     }
     private async Task<bool> createAccountPage()
     {

@@ -104,7 +104,13 @@ public class ServerSocketHandler implements Runnable{
                     // if statement which if entered returns an ArrayList of Accounts
                 if(req.type == Request.TYPE.ACCOUNTS){
                     System.out.println("Getting Accounts from database: " + model.userArray());
-                    outToClient.writeObject(new Request(Request.TYPE.ACCOUNTS, model.userArray()));
+                    ArrayList<Account> users = (ArrayList<Account>)model.userArray();
+                    Account[] usersToSend= new Account[users.size()];
+                    for (int i=0;i <users.size();i++)
+                    {
+                        usersToSend[i]= users.get(i);
+                    }
+                    outToClient.writeObject(new Request(Request.TYPE.ACCOUNTS, usersToSend));
 
                 }
 
@@ -151,8 +157,12 @@ public class ServerSocketHandler implements Runnable{
                     // An if statement which if entered deletes a specific file.
                 } else if (req.type == Request.TYPE.REMOVE) {
                     model.deleteFile((Files)req.argument);
+                    Files f = (Files)req.argument;
+                    //File fileremove = new File(((Files)req.argument).getPath());
+                    File fileremove = new File("C:\\Users\\mathi\\OneDrive\\Skrivebord\\2020Collection\\on-lib\\FileServer\\" + ((Files) req.argument).getFileName());
+                    fileremove.delete();
                     System.out.println("File: " + req.argument + " Deleted");
-                    outToClient.writeObject(new Request(Request.TYPE.REMOVE, req.argument));
+                    outToClient.writeObject(new Request(Request.TYPE.REMOVE, f));
                     // TODO: 28-05-2020 needs to be deleted from FileServer as well
 
 

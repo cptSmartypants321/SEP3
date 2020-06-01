@@ -154,7 +154,7 @@ public class Database implements DatabaseInterface {
                 String name = rs.getString("username");
 
                 String q1 = "UPDATE  \"ViaOnlineLibrary\".users set password = '" + acc.getPassword() +
-                        "' WHERE username = '" + name + "';";
+                        "' WHERE username = '" + acc.getUsername() + "';";
 
 
                 PreparedStatement ps = c.prepareStatement(q1);
@@ -185,7 +185,7 @@ public class Database implements DatabaseInterface {
                 String name = rs.getString("username");
 
                 String q1 = "UPDATE  \"ViaOnlineLibrary\".users set email = '" + acc.getEmail() +
-                        "' WHERE username = '" + name + "';";
+                        "' WHERE username = '" + acc.getUsername() + "';";
 
                 System.out.println(q1);
                 PreparedStatement ps = c.prepareStatement(q1);

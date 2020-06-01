@@ -4,7 +4,7 @@
 @inject HttpClient httpClient
 @inject IUserService userService
 @using System.ComponentModel.DataAnnotations
-
+@inject NavigationManager navManager 
 <h3>Create a new Account</h3>
 <br />
 
@@ -68,6 +68,8 @@
 
           // Display notification..
         }
+        navManager.NavigateTo("/");
+        
 
 
 

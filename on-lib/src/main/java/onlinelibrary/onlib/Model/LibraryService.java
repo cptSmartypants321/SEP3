@@ -32,5 +32,5 @@ public interface LibraryService extends PropertyChangeSubject {
 
     // HTTP GET --> READ
 
-    ArrayList<Account> getAllUsers();
+    Account[] getAllUsers();
 }

@@ -510,6 +510,7 @@ C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\bin\Debug\netcoreapp3.1\t
 C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\bin\Debug\netcoreapp3.1\en-US\Syncfusion.Blazor.resources.dll
+C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\SEP3.csprojAssemblyReference.cache
 C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\SEP3.csproj.CoreCompileInputs.cache
 C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\SEP3.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\SEP3.RazorComponent.input.cache
@@ -555,3 +556,5 @@ C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\s
 C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\SEP3.dll
 C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\SEP3.pdb
 C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\SEP3.genruntimeconfig.cache
+C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Logout.razor.g.cs
+C:\Users\mathi\OneDrive\Skrivebord\2020Collection\SEP3\obj\Debug\netcoreapp3.1\Razor\Pages\Logout.razor.g.cs

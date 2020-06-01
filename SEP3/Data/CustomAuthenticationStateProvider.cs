@@ -40,7 +40,11 @@ namespace SEP3.Data
         public void MarkUserAsAuthenticated(User returnedUser)
         {
             ClaimsIdentity identity=GetClaimsIdentity(returnedUser);
-            if (returnedUser.admin) identity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
+            if (returnedUser.admin)
+            {
+                Console.WriteLine("I am ADMIN");
+                identity.AddClaim(new Claim(ClaimTypes.Role, "admin"));
+            }
             var user = new ClaimsPrincipal(identity);
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }

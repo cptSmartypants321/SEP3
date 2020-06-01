@@ -69,7 +69,10 @@ public class LibraryServiceImpl implements LibraryService{
 
     @Override
     public Account login1(Account account) {
+        //Files file = new Files("Hello");
+        //clientMain.sendToServer(Request.TYPE.REMOVE, file);
         return clientMain.SendToServer1(Request.TYPE.LOGIN, account);
+
     }
 
     @Override
@@ -88,8 +91,8 @@ public class LibraryServiceImpl implements LibraryService{
     }
 
     @Override
-    public ArrayList<Account> getAllUsers() {
-        return (ArrayList<Account>)clientMain.SendToServer2(Request.TYPE.ACCOUNTS, null);
+    public Account[] getAllUsers() {
+        return (Account[])clientMain.SendToServer2(Request.TYPE.ACCOUNTS, null);
     }
 
 

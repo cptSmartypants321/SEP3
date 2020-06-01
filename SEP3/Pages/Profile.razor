@@ -3,6 +3,11 @@
 @using  SEP3.Services
 @inject IUserService userService
 @inject NavigationManager navManager
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject IUserService userService
+@inject HttpClient httpClient
+@using System.Text.Json 
+
 
 
 
@@ -43,8 +48,7 @@
 </style>
 <AuthorizeView>
     <Authorized>
-        <EditForm Model="@user" OnValidSubmit="@UpdateAccount">
-            <ChildContent Context="another_name">
+      
                 <div class="col-6 row float-right">
                     <table class="table">
                         <thead>
@@ -52,81 +56,86 @@
                                 <th>File Name</th>
                                 <th>Date</th>
                                 <th>Rating</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            @if (files != null)
+                            @if (fileList != null)
                             {
-                                foreach (var file in files)
+                                foreach (var file in fileList)
                                 {
                                     <tr>
                                         <td>@file.filename</td>
                                         <td>@file.uploadDate</td>
                                         <td>@file.rating</td>
+                                        <td><button class=" btn btn-primary" @onclick="@(()=> deleteFile(file))" style="margin-right: 10px" value="Delete" /></td>
+
 
                                     </tr>
                                 }
                             }
                         </tbody>
                     </table>
+
+                </div>
+                
+        <EditForm Model="@user" OnInvalidSubmit="@UpdateAccount">
+            <ChildContent Context="another_name">
+            <div id="profile" class="col-4">
+                <div style="text-align:center">
+                    <label class="font-weight-bold" style="color: #4267B2; font-size:25px; ">Account Info</label>
                 </div>
 
+                <br />
 
-                <div id="profile" class="col-4">
+                <label class="font-weight">Username: @user.username</label>
+                <br />
+                <br />
+                <label class="font-weight">Email: @user.email</label>
+                <br />
+            </div>
+
+
+
+            <div id="editprofile" class="col-4" style="align-content: center">
+                <div>
                     <div style="text-align:center">
-                        <label class="font-weight-bold" style="color: #4267B2; font-size:25px; ">Account Info</label>
+                        <label class="font-weight-bold" style="color: #4267B2; font-size:25px; ">Edit Account</label>
                     </div>
 
-                    <br />
-
-                    <label class="font-weight">user.username</label>
-                    <br />
-                    <br />
-                    <label class="font-weight">My@email.com</label>
-                    <br />
                 </div>
 
+                <br />
+                <div>
+                    <label class="font-weight">Your Current Password </label>
+                    <input type="password" class="form-control col-8 font-italic" style="left: 15%; text-align: center; " @bind="userPassword" placeholder="Password" />
 
-
-                <div id="editprofile" class="col-4" style="align-content: center">
-                    <div>
-                        <div style="text-align:center">
-                            <label class="font-weight-bold" style="color: #4267B2; font-size:25px; ">Edit Account</label>
-                        </div>
-
-                    </div>
-
-                    <br />
-                    <div>
-                        <label class="font-weight">Your Current Password </label>
-                        <input type="password" class="form-control col-8 font-italic" style="left: 15%; text-align: center; " @bind="user.password" placeholder="Password" />
-
-                    </div>
-                    <br />
-
-                    <br />
-                    <div style="">
-                        <label class="font-weight">The New Password </label>
-                        <input type="password" class="form-control col-8 font-italic" style="left:15%; text-align:center;" @bind="user.password" placeholder="Password" />
-
-                    </div>
-                    <br>
-                    <br />
-                    <div>
-                        <label class="font-weight">The New Email </label>
-                        <input type="email" class="form-control col-8 font-italic" style="left:15%; text-align:center;" @bind="user.email" placeholder="My@email.com" />
-
-                    </div>
-                    <br />
-                    <br />
-                    <div class="col-6" style="left:23%">
-                        <input type="submit" class="form-control btn btn-primary" value="Save Changes" />
-                        <span>&nbsp;</span>
-                        <!--<button class="btn btn-primary" @onclick="createAccountPage">Create Account</button>-->
-                        <!-- <input type="submit" class="form-control col-2 btn btn-primary" value="Create account" /> -->
-                    </div>
                 </div>
+                <br />
+
+                <br />
+                <div style="">
+                    <label class="font-weight">The New Password </label>
+                    <input type="password" class="form-control col-8 font-italic" style="left:15%; text-align:center;" @bind="changedPassword" placeholder="Password" />
+
+                </div>
+                <br>
+                <br />
+                <div>
+                    <label class="font-weight">The New Email </label>
+                    <input type="email" class="form-control col-8 font-italic" style="left:15%; text-align:center;" @bind="newEmail" placeholder="My@email.com" />
+
+                </div>
+                <br />
+                <br />
+                <div class="col-6" style="left:23%">
+                    <input type="submit" class="form-control btn btn-primary" value="Save Changes" />
+                    <span>&nbsp;</span>
+                    <!--<button class="btn btn-primary" @onclick="createAccountPage">Create Account</button>-->
+                    <!-- <input type="submit" class="form-control col-2 btn btn-primary" value="Create account" /> -->
+                </div>
+            </div>
             </ChildContent>
         </EditForm>
     </Authorized>
@@ -142,32 +151,60 @@
 
         @code {
 
-            public IList<Files> files;
             public User user;
             public bool isCorrect;
-            public String username;
+            public string changedPassword;
+            public string userPassword;
+            public string newEmail;
+            public List<Files> fileList;
 
             protected override async Task OnInitializedAsync()
             {
                 user = new User();
                 Console.WriteLine(user.username);
+                user = await sessionStorage.GetItemAsync<User>("user");
+                HttpResponseMessage response = await httpClient.GetAsync("https://localhost:8443/OnlineLibrary/main");
+                Console.WriteLine(response.IsSuccessStatusCode);
+                string responseBody = await response.Content.ReadAsStringAsync();
+                fileList = new List<Files>();
+                Files[] fileArray = JsonSerializer.Deserialize<Files[]>(responseBody);
+                Console.WriteLine("File list " + fileArray[0].filename);
+                foreach (var files in fileArray)
+                {
+                    if (files.username.Equals(user.username))
+                    {
+                        fileList.Add(files);
+                    }
 
+                };
+            }
 
+            public void deleteFile(Files file)
+            {
+                Console.WriteLine("File selected: " + file.filename);
+                userService.deleteFile(file);
+                fileList.Remove(file);
+                navManager.NavigateTo("/profile");
             }
 
 
 
             public void UpdateAccount()
             {
-
+                if (userPassword != null && changedPassword != null)
+                {
+                    if (userPassword.Equals(user.password))
+                    {
+                        user.password = changedPassword;
+                    }
+                }
+                if (newEmail != null) user.email = newEmail;
+                Console.WriteLine($"user password:  {userPassword} changed password {changedPassword}  new e-mail {user.email}");
+                //send to api
+                userService.ChangeAccountInfo(user);
 
             }
 
-            private async Task<bool> createAccountPage()
-            {
-                Console.WriteLine("*************** USER ACCOUNT CREATE******************");
-                return await Task.FromResult(true);
-            }
 
 
 

@@ -76,11 +76,17 @@ public class LibraryController {
         // Method for removing a file from system.
         // Not using RequestMethod.DELETE as it doesnt return anything..
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
-    public Files deleteFile(@RequestParam(value = "Name") String file){
-        System.out.println("Deleting file from Blazor: " + file);
+    public Files deleteFile(@RequestBody String file) throws JsonProcessingException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<Files> ref = new TypeReference<Files>(){};
+        Files files = mapper.readValue(file, ref);
+
+        System.out.println("Deleting file from Blazor: " + files);
+
         // TODO: 28-05-2020 Convertion into a file object
-        Files files1 = new Files(file);
-        return libraryService.deleteFile(files1);
+
+        return libraryService.deleteFile(files);
     }
 
     // TODO: 28-05-2020 Comment
@@ -116,9 +122,6 @@ public class LibraryController {
         System.out.println("File Received from Blazor: " + files.getFileName() + " Owner: " + files.getUsername());
         System.out.println(files.getFileName() + " Username " + files.getUsername() + "Rating: " + files.getRating() + " Category: " +files.isChemistry());
 
-
-
-
         // TODO: 28-05-2020 Fix the stream !!!
         //byte[] byteArray=new byte[name.count()];
         //name.toArray(byteArray);
@@ -143,6 +146,7 @@ public class LibraryController {
         System.out.println("User recieved "+ request);
         String[] acc = request.split(":");
         Account account = new Account(acc[0],acc[1],null);
+        System.out.println(account.getUsername() + account.getPassword());
         Account responce = libraryService.login1(account);
         System.out.println("LIBRARY CONTROLLER: " + responce +" " + responce.getEmail());
 

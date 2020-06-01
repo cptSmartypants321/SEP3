@@ -14,6 +14,12 @@ namespace SEP3.Services
          public  Task<User> LoginAsync(User user);
         public Task<bool> CreateAccAsync(User user);
 
+        public Task<bool> ChangeAccountInfo(User user);
+
+        public Task<Files> deleteFile(Files file);
+
+        public Task<List<User>> getAllUsers();
+
 
 
     }
